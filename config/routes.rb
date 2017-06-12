@@ -1,4 +1,9 @@
 Shifter2::Application.routes.draw do
+  get "users/new"
+
+  resources :users
+
+  match '/signup', to: 'user#new'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

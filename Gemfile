@@ -36,3 +36,13 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+
+# bootstrap
+gem 'bootstrap-sass', '2.1'
+
+# encrypte password
+gem 'bcrypt-ruby', '3.0.1'
+
+# To use haml webpages
+gem 'haml'
