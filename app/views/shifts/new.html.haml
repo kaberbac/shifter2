@@ -1,0 +1,8 @@
+%h1 Shift
+= form_for @shift do |f|
+  -#= f.hidden_field 'user_id', value: current_user.id
+  -#= current_user.inspect
+  = f.label 'day_work'
+  = f.date_select 'day_work'
+  %br
+  = f.submit 'Add date'

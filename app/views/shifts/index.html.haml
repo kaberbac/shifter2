@@ -1,0 +1,24 @@
+%h1 "#{current_user.first_name} #{current_user.last_name} shifts"
+
+%h3 Shifts
+
+%table{border:1}
+  %tr
+    %th id
+    %td user_id
+    %th day_work
+    -@shifts.each do |s|
+      %tr
+        %td= s.id
+        %td= s.user_id
+        %td= s.day_work
+
+%h3 Add shift
+= form_for [current_user, @shift] do |f|
+  -#= f.hidden_field 'user_id', value: current_user.id
+  -#= current_user.inspect
+  = f.label 'day_work'
+  = f.date_select 'day_work'
+  %br
+  = f.submit 'Add date'
+

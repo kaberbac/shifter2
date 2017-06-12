@@ -1,5 +1,15 @@
 @import "bootstrap";
 
+/* universal */
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+}
+
 /* forms */
 
 #error_explanation {
