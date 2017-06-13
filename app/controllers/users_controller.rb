@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  skip_before_filter :sign_in_if_not_logged, :only => [:new, :create]
 
   def new
     @user = User.new
@@ -17,14 +18,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    if signed_in?
-      @user = User.find(params[:id])
-      if @user != current_user
-             flash.now[:error] = "You dont have permission to view other users profile"
-             @user = current_user
-      end
-    else
-      redirect_to signin_path
+    @user = User.find(params[:id])
+    if @user != current_user
+           flash.now[:error] = "You dont have permission to view other users profile"
+           @user = current_user
     end
   end
 

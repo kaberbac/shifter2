@@ -6,13 +6,8 @@ class ShiftsController < ApplicationController
   end
 
   def index
-    if signed_in?
       @shifts = current_user.shifts
       @shift = Shift.new
-    else
-      redirect_to signin_path
-    end
-
   end
 
   def new
@@ -20,17 +15,13 @@ class ShiftsController < ApplicationController
   end
 
   def create
-    if signed_in?
-      @shift = current_user.shifts.new(params[:shift])
-      if @shift.save
-        flash[:success] = "Shift accepted"
-        redirect_to user_shifts_path
-      else
-        @shifts = current_user.shifts.where('id IS NOT NULL')
-        render 'index'
-      end
+    @shift = current_user.shifts.new(params[:shift])
+    if @shift.save
+      flash[:success] = "Shift accepted"
+      redirect_to user_shifts_path
     else
-      redirect_to signin_path
+      @shifts = current_user.shifts.where('id IS NOT NULL')
+      render 'index'
     end
   end
 

@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_filter :sign_in_if_not_logged, :only => [:new, :create]
   def new
   end
 
