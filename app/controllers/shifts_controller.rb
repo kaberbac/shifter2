@@ -26,7 +26,7 @@ class ShiftsController < ApplicationController
         flash[:success] = "Shift accepted"
         redirect_to user_shifts_path
       else
-        @shifts = current_user.shifts.where(:id.present?)
+        @shifts = current_user.shifts.where('id IS NOT NULL')
         render 'index'
       end
     else
