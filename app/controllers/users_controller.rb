@@ -14,7 +14,20 @@ class UsersController < ApplicationController
     else
       render 'new'
     end
+  end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    current_user.update_attributes(params[:user])
+    if current_user.save
+      flash[:success] = "Update succeeded!"
+      redirect_to user_path(@user)
+    else
+      render 'edit'
+    end
   end
 
   def show
