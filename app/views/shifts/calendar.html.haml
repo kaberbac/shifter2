@@ -1,9 +1,26 @@
 %h3 Calendar Shifts
 
 %table.table.table-striped.table-bordered
-  -@shifts.each_pair do |day_work, first_name|
-    %tr{ style: "display: block; float: left" }
-      %th{ style: "display: block" }= day_work.strftime("%a %m-%y")
-      %td{ style: "display: block" }
-        -first_name.each do |f|
-          = ' - ' + f.user.first_name
+  %tr
+  -@shifts.keys.each do |days|
+    %th= days.strftime("%a %m-%y")
+  %tr
+    -@shifts.values.each do |shifts|
+      %td
+        %ul
+          -shifts.each do |f|
+            %li= f.user.first_name
+
+
+
+-#%table.table.table-striped.table-bordered
+-#  %tr
+-#  -@shifts.each do |days, shifts|
+-#    %th= days.strftime("%a %m-%y")
+-#  %tr
+-#    -@shifts.each do |days, shifts|
+-#      %td
+-#        %ul
+-#          -shifts.each do |f|
+-#            %li= f.user.first_name
+
