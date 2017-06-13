@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     if @user.save
       sign_in @user
       flash[:success] = "Welcome to Shifter2!"
-      redirect_to user_shifts_path
+      redirect_to user_shifts_path(@user)
     else
       render 'new'
     end
