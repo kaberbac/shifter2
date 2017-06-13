@@ -1,9 +1,10 @@
-%h3 Calendar Shifts
+%h3 Calendar Shifts - Week N: #{Date.today.strftime("%U").to_i}
 
 %table.table.table-striped.table-bordered
   %tr
-  -@shifts.keys.each do |days|
-    %th= days.strftime("%a %m-%y")
+  -#-@shifts.keys.each do |days|
+  -@week_business_days.each do |days|
+    %th= days.strftime("%a %d-%b-%y")
   %tr
     -@shifts.values.each do |shifts|
       %td

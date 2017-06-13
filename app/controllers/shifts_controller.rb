@@ -2,7 +2,9 @@ class ShiftsController < ApplicationController
 
   def calendar
     # @shifts = Shift.order("day_work DESC")
-    @shifts = Shift.order("day_work DESC").all.group_by(&:day_work)
+    date = Date.today.beginning_of_week
+    @shifts = Shift.where(:day_work => date..(date+5)).order("day_work ASC").all.group_by(&:day_work)
+    @week_business_days = date..(date+4)
   end
 
   def index
