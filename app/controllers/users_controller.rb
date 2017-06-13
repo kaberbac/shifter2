@@ -18,7 +18,11 @@ class UsersController < ApplicationController
 
   def show
     if signed_in?
-      @user = current_user
+      @user = User.find(params[:id])
+      if @user != current_user
+             flash.now[:error] = "You dont have permission to view other users profile"
+             @user = current_user
+      end
     else
       redirect_to signin_path
     end

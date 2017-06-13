@@ -21,13 +21,12 @@ class ShiftsController < ApplicationController
 
   def create
     if signed_in?
-
       @shift = current_user.shifts.new(params[:shift])
       if @shift.save
         flash[:success] = "Shift accepted"
         redirect_to user_shifts_path
       else
-        @shifts = current_user.shifts
+        @shifts = current_user.shifts.where(:id.present?)
         render 'index'
       end
     else

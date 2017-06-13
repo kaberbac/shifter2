@@ -9,7 +9,7 @@
     %th id
     %th user_id
     %th day_work
-    -@shifts.each do |s|
+    - @shifts.each do |s|
       %tr
         %td= s.id
         %td= s.user_id
