@@ -1,0 +1,12 @@
+%h3 Calendar Shifts
+
+%table.table.table-striped.table-bordered
+  %tr
+    %th First Name
+    %th day_work
+    -@shifts.each_pair do |day_work, first_name|
+      %tr
+        %td
+          -first_name.each do |f|
+            = ' - ' + f.user.first_name
+        %td= day_work.strftime("%d %b %y")

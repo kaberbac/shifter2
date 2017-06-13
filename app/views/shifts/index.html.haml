@@ -1,11 +1,13 @@
 %h1 "#{current_user.first_name} #{current_user.last_name} shifts"
 
+= render 'shared/shift_error_messages'
+
 %h3 Shifts
 
-%table{border:1}
+%table.table.table-striped.table-bordered
   %tr
     %th id
-    %td user_id
+    %th user_id
     %th day_work
     -@shifts.each do |s|
       %tr

@@ -6,7 +6,7 @@
   .span6.offset3
 
     =form_for @user do |f|
-      = render 'shared/error_messages'
+      = render 'shared/user_error_messages'
       = f.label 'first_name'
       = f.text_field 'first_name'
       %br

@@ -10,6 +10,7 @@ Shifter2::Application.routes.draw do
   match '/signup', to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
+  match '/calendar', to: 'shifts#calendar'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

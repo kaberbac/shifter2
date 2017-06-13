@@ -1,0 +1,8 @@
+- if @shift.errors.any?
+  #error_explanation
+    .alert.alert-error
+      The form contains #{pluralize(@shift.errors.count, "error")}.
+    %ul
+      - @shift.errors.full_messages.each do |msg|
+        %li
+          * #{msg}

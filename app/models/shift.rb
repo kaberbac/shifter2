@@ -11,13 +11,13 @@ class Shift < ActiveRecord::Base
 
   def not_past_date
     if self.day_work.past?
-      errors.add(:date, 'not in past')
+      errors.add(:date, 'date should be in future')
     end
   end
 
   def business_day
     if self.day_work.saturday? || self.day_work.sunday?
-      errors.add(:date, 'not a business day')
+      errors.add(:date, 'date should be a business day (Monday to Friday)')
     end
   end
 

@@ -1,6 +1,9 @@
 class ShiftsController < ApplicationController
 
-
+  def calendar
+    # @shifts = Shift.order("day_work DESC")
+    @shifts = Shift.order("day_work DESC").all.group_by(&:day_work)
+  end
 
   def index
     if signed_in?
@@ -24,7 +27,8 @@ class ShiftsController < ApplicationController
         flash[:success] = "Shift accepted"
         redirect_to user_shifts_path
       else
-        render 'new'
+        @shifts = current_user.shifts
+        render 'index'
       end
     else
       redirect_to signin_path
