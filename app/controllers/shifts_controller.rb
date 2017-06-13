@@ -6,7 +6,7 @@ class ShiftsController < ApplicationController
   end
 
   def index
-      @shifts = current_user.shifts
+      @shifts = current_user.shifts.order("day_work ASC")
       @shift = Shift.new
   end
 
