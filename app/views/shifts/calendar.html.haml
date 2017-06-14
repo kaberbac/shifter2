@@ -1,5 +1,8 @@
 %h3 Calendar Shifts - Week N: #{Date.today.strftime("%U").to_i}
 
+%h3 Select a week:
+
+
 %table.table.table-striped.table-bordered
   %tr
   -#-@shifts.keys.each do |days|
@@ -13,7 +16,7 @@
             %li= f.user.first_name
 
 
-
+-# another way to do it
 -#%table.table.table-striped.table-bordered
 -#  %tr
 -#  -@shifts.each do |days, shifts|

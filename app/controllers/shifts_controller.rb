@@ -1,7 +1,14 @@
 class ShiftsController < ApplicationController
 
   def calendar
-    # @shifts = Shift.order("day_work DESC")
+
+    #@year_weeks is a hash with key as week number and value the corresponding day
+    @year_weeks = {}
+    (1..52).each do |w|
+      @year_weeks[w] = Date.today.beginning_of_year + (w-1)*7
+    end
+
+    raise @year_weeks.inspect
     date = Date.today.beginning_of_week
     @shifts = Shift.where(:day_work => date..(date+5)).order("day_work ASC").all.group_by(&:day_work)
     @week_business_days = date..(date+4)
