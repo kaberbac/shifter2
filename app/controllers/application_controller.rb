@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   private
 
     def sign_in_if_not_logged
-      redirect_to signin_path, :flash => { :error => "You must signin first"} unless signed_in?
+      (redirect_to signin_path, :flash => { :error => "You must signin first"}) unless signed_in?
     end
 
 

@@ -8,8 +8,9 @@ class ShiftsController < ApplicationController
   end
 
   def index
-      @shifts = current_user.shifts.order("day_work ASC")
-      @shift = Shift.new
+    check_current_user
+    @shifts = current_user.shifts.order("day_work ASC")
+    @shift = Shift.new
   end
 
   def new
@@ -24,6 +25,16 @@ class ShiftsController < ApplicationController
     else
       @shifts = current_user.shifts.where('id IS NOT NULL')
       render 'index'
+    end
+  end
+
+  private
+
+  def check_current_user
+    @user = User.find(params[:user_id])
+    if @user != current_user
+      flash.now[:error] = "You dont have permission to view other users shift"
+      @user = current_user
     end
   end
 

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :sign_in_if_not_logged, :only => [:new, :create]
+  skip_before_filter :sign_in_if_not_logged, :only => [:new, :create, :update]
 
   def new
     @user = User.new
@@ -17,12 +17,13 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    check_current_user
   end
 
   def update
-    current_user.update_attributes(params[:user])
-    if current_user.save
+    @user = current_user
+    if @user.update_attributes(params[:user])
+      cookies.permanent[:remember_token] = @user.remember_token
       flash[:success] = "Update succeeded!"
       redirect_to user_path(@user)
     else
@@ -31,9 +32,15 @@ class UsersController < ApplicationController
   end
 
   def show
+    check_current_user
+  end
+
+  private
+
+  def check_current_user
     @user = User.find(params[:id])
     if @user != current_user
-      flash.now[:error] = "You dont have permission to view other users profile"
+      flash.now[:error] = "You dont have permission to view/edit other users profile"
       @user = current_user
     end
   end
