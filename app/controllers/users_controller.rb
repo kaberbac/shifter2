@@ -30,27 +30,16 @@ class UsersController < ApplicationController
 
     if params[:user][:old_password] || params[:user][:password] || params[:user][:password_confirmation]
       if @user.authenticate(params[:user][:old_password])
-        if @user.update_attributes(params[:user].except(:old_password))
-          cookies.permanent[:remember_token] = @user.remember_token
-          flash[:success] = "Password change succeeded!"
-          redirect_to user_path(@user)
-        else
-          render 'passwordchange'
-        end
+        user_update(params[:user].except(:old_password), "Password change succeeded!", 'passwordchange' )
       else
         flash.now[:error] = "Old password not valid!"
         render 'passwordchange'
       end
     else
-      if @user.update_attributes(params[:user])
-        cookies.permanent[:remember_token] = @user.remember_token
-        flash[:success] = "Update succeeded!"
-        redirect_to user_path(@user)
-      else
-        render 'edit'
-      end
+      user_update(params[:user], "Update succeeded!", 'edit' )
     end
   end
+
 
   def show
     check_current_user
@@ -63,6 +52,16 @@ class UsersController < ApplicationController
     if @user != current_user
       flash.now[:error] = "You dont have permission to view/edit other users profile"
       @user = current_user
+    end
+  end
+
+  def user_update(params, msg, goto )
+    if @user.update_attributes(params)
+      cookies.permanent[:remember_token] = @user.remember_token
+      flash[:success] = msg
+      redirect_to user_path(@user)
+    else
+      render goto
     end
   end
 
