@@ -1,4 +1,4 @@
-- provide(:title, 'Shifter | Edit')
+- provide(:title, 'Edit')
 
 %h1 Edit profile
 
@@ -12,12 +12,6 @@
       %br
       = f.label 'last_name'
       = f.text_field 'last_name'
-      %br
-      = f.label 'password'
-      = f.password_field 'password'
-      %br
-      = f.label 'password_confirmation', "Confirmation"
-      = f.password_field 'password_confirmation'
       %br
         = f.submit 'Update', :class => 'btn btn-success'
         = link_to 'Cancel', user_shifts_path(@user), :class => 'btn btn-danger'

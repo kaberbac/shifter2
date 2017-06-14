@@ -16,18 +16,39 @@ class UsersController < ApplicationController
     end
   end
 
+  def passwordchange
+    @user = current_user
+
+  end
+
   def edit
     check_current_user
   end
 
   def update
     @user = current_user
-    if @user.update_attributes(params[:user])
-      cookies.permanent[:remember_token] = @user.remember_token
-      flash[:success] = "Update succeeded!"
-      redirect_to user_path(@user)
+
+    if params[:user][:old_password] || params[:user][:password] || params[:user][:password_confirmation]
+      if @user.authenticate(params[:user][:old_password])
+        if @user.update_attributes(params[:user].except(:old_password))
+          cookies.permanent[:remember_token] = @user.remember_token
+          flash[:success] = "Password change succeeded!"
+          redirect_to user_path(@user)
+        else
+          render 'passwordchange'
+        end
+      else
+        flash.now[:error] = "Old password not valid!"
+        render 'passwordchange'
+      end
     else
-      render 'edit'
+      if @user.update_attributes(params[:user])
+        cookies.permanent[:remember_token] = @user.remember_token
+        flash[:success] = "Update succeeded!"
+        redirect_to user_path(@user)
+      else
+        render 'edit'
+      end
     end
   end
 

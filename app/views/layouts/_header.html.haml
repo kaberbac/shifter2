@@ -13,6 +13,7 @@
                 %ul.dropdown-menu
                   %li= link_to "Profile", current_user
                   %li= link_to "Edit", edit_user_path(current_user.id)
+                  %li= link_to "Password Change", passwordchange_user_path(current_user)
                   %li= link_to "Shifts", user_shifts_path(current_user.id)
                   %li= link_to "Calendar", calendar_path
                   %li.divider
