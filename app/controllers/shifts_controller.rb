@@ -5,13 +5,23 @@ class ShiftsController < ApplicationController
     #@year_weeks is a hash with key as week number and value the corresponding day
     @year_weeks = {}
     (1..52).each do |w|
-      @year_weeks[w] = Date.today.beginning_of_year + (w-1)*7
+      @year_weeks['Week #' + w.to_s + ' Start : ' + (Date.today.beginning_of_year + (w-1)*7).to_s] = Date.today.beginning_of_year + (w-1)*7
     end
 
-    raise @year_weeks.inspect
-    date = Date.today.beginning_of_week
-    @shifts = Shift.where(:day_work => date..(date+5)).order("day_work ASC").all.group_by(&:day_work)
-    @week_business_days = date..(date+4)
+     #raise @year_weeks.inspect
+
+    # if params[:selected_week].nil?
+    #   params[:selected_week] = Date.today.beginning_of_week(:sunday)
+    # end
+    params[:selected_week] ||= Date.today.beginning_of_week(:sunday)
+
+    week_first_day(params[:selected_week].to_date)
+
+  end
+
+  def week_first_day (date = Date.today.beginning_of_week(:sunday))
+    @shifts = Shift.day_work_between(date, date+7).ordered.all.group_by(&:day_work)
+    @week_business_days = date..(date+6)
   end
 
   def index

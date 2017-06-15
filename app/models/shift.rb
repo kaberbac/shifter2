@@ -3,6 +3,10 @@ class Shift < ActiveRecord::Base
 
   belongs_to :user
 
+  # scope :method_name, lambda { |variable| where(some_attribute: variable) }
+  scope :ordered, order(:day_work)
+  scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
+
   validates :user, presence: true
   validates :day_work, presence: true
   validates :day_work, :uniqueness => {:scope => :user_id}

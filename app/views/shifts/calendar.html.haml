@@ -1,11 +1,7 @@
-%h3 Calendar Shifts - Week N: #{Date.today.strftime("%U").to_i}
+%h3 Calendar Shifts - Week N: #{params[:selected_week].to_date.strftime("%U")}
 
 %h3 Select a week:
-
-= collection_select('week_number', 'date', @year_weeks, :last, :first,{:selected => @year_weeks['Week # ' + Date.today.strftime("%U")]})
-
-
-
+= collection_select('week_number', 'date', @year_weeks, :last, :first, {:selected => params[:selected_week]} )
 
 %table.table.table-striped.table-bordered#table_id
   %tr
@@ -21,3 +17,15 @@
             -@shifts[date].each do |shift|
               %li.special
                 = shift.user.first_name
+
+
+:javascript
+  $("#week_number_date").change(function(){
+    var current_option_selected = $(this).val();
+    //$(document).ready(function(){
+        //$("#table_id").val(current_option_selected);
+    //});
+    window.location.href = "/calendar?selected_week=" + current_option_selected;
+  })
+  // redirect with javascript
+  // window.location.href = "/calendar?selected_week=" + current_option_selected

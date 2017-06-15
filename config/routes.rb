@@ -1,7 +1,6 @@
 Shifter2::Application.routes.draw do
 
   resources :users, except: [:index, :destroy] do
-    #/users/1/calendar
     resources :shifts
     get :passwordchange, on: :member
     get :signup, on: :collection
