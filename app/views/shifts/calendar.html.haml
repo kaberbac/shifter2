@@ -2,29 +2,22 @@
 
 %h3 Select a week:
 
+= collection_select('week_number', 'date', @year_weeks, :last, :first,{:selected => @year_weeks['Week # ' + Date.today.strftime("%U")]})
 
-%table.table.table-striped.table-bordered
+
+
+
+%table.table.table-striped.table-bordered#table_id
   %tr
-  -#-@shifts.keys.each do |days|
-  -@week_business_days.each do |days|
-    %th= days.strftime("%a %d-%b-%y")
+  -@week_business_days.each do |date|
+    %th= date.strftime("%a %d-%b-%y")
   %tr
-    -@shifts.values.each do |shifts|
+    -#shifts.key est day_work, shifts.value est une liste de shift
+    -# @shifts: { Date => [Shift, Shift] }
+    -@week_business_days.each do |date|
       %td
-        %ul
-          -shifts.each do |f|
-            %li= f.user.first_name
-
-
--# another way to do it
--#%table.table.table-striped.table-bordered
--#  %tr
--#  -@shifts.each do |days, shifts|
--#    %th= days.strftime("%a %m-%y")
--#  %tr
--#    -@shifts.each do |days, shifts|
--#      %td
--#        %ul
--#          -shifts.each do |f|
--#            %li= f.user.first_name
-
+        -if @shifts[date].present?
+          %ul
+            -@shifts[date].each do |shift|
+              %li.special
+                = shift.user.first_name
