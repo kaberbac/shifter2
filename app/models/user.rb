@@ -12,6 +12,11 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true, length: {minimum: 2, maximum: 50}
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }, unless: lambda { self.persisted? && self.password.nil? }
+
+  def full_name
+    first_name.capitalize + ' ' + last_name.upcase
+  end
+
   private
 
   def create_remember_token

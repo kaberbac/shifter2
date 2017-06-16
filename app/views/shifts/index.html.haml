@@ -1,4 +1,4 @@
-%h1 "#{current_user.first_name} #{current_user.last_name} shifts"
+%h1 "#{current_user.full_name} shifts"
 
 = render 'shared/shift_error_messages'
 
@@ -8,11 +8,13 @@
   %tr
     %th id
     %th user_id
+    %th full name
     %th day_work
     - @shifts.each do |s|
       %tr
         %td= s.id
         %td= s.user_id
+        %td= s.user.full_name
         %td= s.day_work
 
 %h3 Add shift
