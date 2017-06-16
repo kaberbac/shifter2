@@ -1,7 +1,7 @@
 Shifter2::Application.routes.draw do
 
   resources :users, except: [:index, :destroy] do
-    resources :shifts
+    resources :shifts, except: [:edit, :show]
     get :passwordchange, on: :member
     get :signup, on: :collection
   end
