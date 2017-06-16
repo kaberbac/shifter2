@@ -1,9 +1,2 @@
-%h1 Shift
-= form_for [current_user, @shift] do |f|
-  -#= f.hidden_field 'user_id', value: current_user.id
-  -#= current_user.inspect
-  = render 'shared/shift_error_messages'
-  = f.label 'day_work'
-  = f.date_select 'day_work'
-  %br
-  = f.submit 'Add date'
+%h1 New Shift
+= render 'new'

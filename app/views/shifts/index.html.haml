@@ -18,11 +18,5 @@
         %td= s.day_work
 
 %h3 Add shift
-= form_for [current_user, @shift] do |f|
-  -#= f.hidden_field 'user_id', value: current_user.id
-  -#= current_user.inspect
-  = f.label 'day_work'
-  = f.date_select 'day_work'
-  %br
-  = f.submit 'Add date'
+= render 'new'
 

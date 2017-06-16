@@ -1,0 +1,5 @@
+= form_for [current_user, @shift] do |f|
+  = f.label 'day_work'
+  = f.date_select 'day_work'
+  %br
+  = f.submit 'Add date'
