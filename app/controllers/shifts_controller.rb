@@ -1,5 +1,7 @@
 class ShiftsController < ApplicationController
 
+  MAX_SHIFTS_PER_DAY = 2
+
   def calendar
 
     #@year_weeks is a hash with key as week number and value the corresponding day
@@ -36,8 +38,8 @@ class ShiftsController < ApplicationController
 
   def create
     @shift = current_user.shifts.new(params[:shift])
-    if Shift.shift_day_work(@shift.day_work).count == 2
-      flash[:error] = "Maximum 2 shifts a day is allowed"
+    if Shift.shift_day_work(@shift.day_work).count == MAX_SHIFTS_PER_DAY
+      flash[:error] = "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " shifts per day is allowed"
       redirect_to user_shifts_path
     else
       if @shift.save

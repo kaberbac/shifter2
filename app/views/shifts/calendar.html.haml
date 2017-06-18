@@ -15,7 +15,7 @@
         -if @shifts[date].present?
           %ul
             -@shifts[date].each do |shift|
-              %li.special
+              %li.special{:class => "#{shift.status}"}
                 = shift.user.first_name
 
 
