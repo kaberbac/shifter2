@@ -36,12 +36,17 @@ class ShiftsController < ApplicationController
 
   def create
     @shift = current_user.shifts.new(params[:shift])
-    if @shift.save
-      flash[:success] = "Shift accepted"
+    if Shift.shift_day_work(@shift.day_work).count == 2
+      flash[:error] = "Maximum 2 shifts a day is allowed"
       redirect_to user_shifts_path
     else
-      @shifts = current_user.shifts.where('id IS NOT NULL')
-      render 'index'
+      if @shift.save
+        flash[:success] = "Shift accepted"
+        redirect_to user_shifts_path
+      else
+        @shifts = current_user.shifts.where('id IS NOT NULL')
+        render 'index'
+      end
     end
   end
 

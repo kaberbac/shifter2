@@ -8,6 +8,8 @@ class Shift < ActiveRecord::Base
   # scope :method_name, lambda { |variable| where(some_attribute: variable) }
   scope :ordered, order(:day_work)
   scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
+  # return shifts for a given day_work
+  scope :shift_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
 
   validates :user, presence: true
   validates :day_work, presence: true
