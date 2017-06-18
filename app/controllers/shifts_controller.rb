@@ -50,9 +50,12 @@ class ShiftsController < ApplicationController
     msg=''
     if @shift.user_id != current_user.id
       msg = 'You dont have permission to delete other users shifts'
-    else
-      @shift.destroy
-      msg = 'shift was deleted successfuly'
+    else if @shift.status != 'pending'
+           msg = 'You can not delete approved or rejected status'
+         else
+           @shift.destroy
+           msg = 'shift was deleted successfuly'
+         end
     end
     redirect_to user_shifts_path(current_user.id), notice: msg
   end
