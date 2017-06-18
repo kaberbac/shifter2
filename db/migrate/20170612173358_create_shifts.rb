@@ -3,6 +3,7 @@ class CreateShifts < ActiveRecord::Migration
     create_table :shifts do |t|
       t.date :day_work
       t.integer :user_id
+      t.string :status, default: 'pending'
 
       t.timestamps
     end

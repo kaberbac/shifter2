@@ -10,6 +10,7 @@
     %th user_id
     %th full name
     %th day_work
+    %th status
     %th
     - @shifts.each do |shift|
       %tr
@@ -17,6 +18,8 @@
         %td= shift.user_id
         %td= shift.user.full_name
         %td= shift.day_work
+        %td{:class => "#{shift.status}"}
+          = shift.status
         %td= link_to 'Delete', user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}
 
 %h3 Add shift

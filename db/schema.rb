@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170612173358) do
+ActiveRecord::Schema.define(:version => 20170618120233) do
 
   create_table "shifts", :force => true do |t|
     t.date     "day_work"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.string   "status",     :default => "pending"
   end
 
   create_table "users", :force => true do |t|
