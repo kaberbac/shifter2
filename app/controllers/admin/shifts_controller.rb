@@ -30,9 +30,15 @@ class Admin::ShiftsController < ApplicationController
 
   def destroy
     @shift = Shift.find(params[:id])
-    @shift.destroy
-    msg = 'shift was deleted successfuly'
+    msg=''
+    if @shift.status != 'pending'
+      msg = 'You can not delete approved or rejected status'
+    else
+      @shift.destroy
+      msg = 'shift was deleted successfuly'
+    end
 
+    msg = 'shift was deleted successfuly'
     redirect_to admin_all_shifts_path, notice: msg
   end
 

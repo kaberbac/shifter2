@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  shift_id: 1
+  user_id: 1
+  decision: MyString
+
+two:
+  shift_id: 1
+  user_id: 1
+  decision: MyString
