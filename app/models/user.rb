@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :shifts
+  has_and_belongs_to_many :roles, :uniq=>true
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
