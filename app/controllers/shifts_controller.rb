@@ -1,7 +1,5 @@
 class ShiftsController < ApplicationController
 
-  MAX_SHIFTS_PER_DAY = 2
-
   def calendar
 
     #@year_weeks is a hash with key as week number and value the corresponding day

@@ -31,7 +31,7 @@ class Shift < ActiveRecord::Base
   end
 
   def check_max_shift_per_day
-    if self.class.shift_day_work(self.day_work).count == MAX_SHIFTS_PER_DAY
+    if self.class.shift_day_work(self.day_work).count >= MAX_SHIFTS_PER_DAY
       errors.add(:date, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " shifts per day is allowed")
     end
   end
