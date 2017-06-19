@@ -18,6 +18,14 @@ class User < ActiveRecord::Base
     first_name.capitalize + ' ' + last_name.upcase
   end
 
+
+  # check if user have role_name
+  def is_role?(role_name)
+    roles = self.roles.map {|role| role.name}
+    roles.include?(role_name)
+  end
+
+
   private
 
   def create_remember_token

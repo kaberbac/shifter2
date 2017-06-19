@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :sign_in_if_not_logged, :init_roles
 
-
   # Force signout to prevent CSRF attacks
   def handle_unverified_request
     sign_out
@@ -25,6 +24,17 @@ class ApplicationController < ActionController::Base
         ROLES.each do |role|
           Role.create(name: role)
         end
+      end
+    end
+
+    def check_if_admin
+      if signed_in?
+        unless current_user.is_role?('admin')
+          flash[:error] = 'You do not have permission to view this page'
+          redirect_to root_path
+        end
+      else
+        sign_in_if_not_logged
       end
     end
 

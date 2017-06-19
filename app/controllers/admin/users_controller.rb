@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_filter :set_user, :except=>[:index, :new, :create]
+  before_filter :check_if_admin
   skip_before_filter :sign_in_if_not_logged, :all
 
   def index
