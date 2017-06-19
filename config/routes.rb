@@ -1,5 +1,16 @@
 Shifter2::Application.routes.draw do
 
+  namespace :admin do
+    resources :users do
+      member do
+        post :add_role
+        delete :delete_role
+        get :edit_role
+      end
+    end
+    resources :roles, :only=>[:index, :create, :destroy]
+  end
+
   resources :users, except: [:index, :destroy] do
     resources :shifts, except: [:edit, :show]
     get :passwordchange, on: :member

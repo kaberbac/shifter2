@@ -1,0 +1,7 @@
+#RoleList
+  This user has #{pluralize @user.roles.length, 'role'}
+  %ul
+  - @user.roles.each do |role|
+    %li
+      = role.name
+      [#{link_to 'Delete', delete_role_admin_user_path(@user, :role=>role.id), :method=>:delete, :confirm=>'Are you sure?'}]

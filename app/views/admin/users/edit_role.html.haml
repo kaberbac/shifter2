@@ -1,0 +1,21 @@
+%h1 User Role
+%b Id:
+= @user.id
+%br
+%b Name:
+= @user.full_name
+%br
+%b Email:
+= @user.email
+
+%hr
+%h2 Roles
+= render :partial=>'role_list'
+#addRole
+  = form_tag [:add_role, :admin, @user] do
+    = label_tag :role, 'Add Role:'
+    -#= text_field_tag :role
+    = select_tag :role, options_from_collection_for_select(@roles, "name", "name")
+    = submit_tag 'Add'
+%hr
+= link_to 'Return to User List', [:admin, User]
