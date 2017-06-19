@@ -1,0 +1,29 @@
+%h2 There #{is_pluralize(@shifts.length, 'shift')}
+
+-#%h3
+-#  = link_to 'Add Shift', new_admin_user_path
+-#%br
+= render 'shared/shift_error_messages'
+
+%h3 All Shifts
+
+%table.table.table-striped.table-bordered.table-hover
+  %tr
+    %th id
+    %th user_id
+    %th full name
+    %th day_work
+    %th status
+    %th
+    - @shifts.each do |shift|
+      %tr
+        %td= shift.id
+        %td= shift.user_id
+        %td= shift.user.full_name
+        %td= shift.day_work
+        %td{:class => "#{shift.status}"}
+          = shift.status
+        %td= link_to 'Delete', admin_user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}
+
+        -#%h3 Add shift
+        -#= render 'new'

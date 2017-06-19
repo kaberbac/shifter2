@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 
 
   # check if user have role_name
-  def is_role?(role_name)
+  def has_role?(role_name)
     roles = self.roles.map {|role| role.name}
     roles.include?(role_name)
   end
