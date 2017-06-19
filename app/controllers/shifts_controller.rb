@@ -38,6 +38,7 @@ class ShiftsController < ApplicationController
 
   def create
     @shift = current_user.shifts.new(params[:shift])
+    @shift.status = 'pending'
     if Shift.shift_day_work(@shift.day_work).count == MAX_SHIFTS_PER_DAY
       flash[:error] = "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " shifts per day is allowed"
       redirect_to user_shifts_path
