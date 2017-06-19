@@ -6,5 +6,5 @@ class Approval < ActiveRecord::Base
   validates :shift_id, presence: true
   validates :user_id, presence: true
   validates :decision, presence: true, uniqueness: true, :inclusion => {:in => DECISIONS}
-  
+
 end

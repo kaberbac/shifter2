@@ -1,14 +1,9 @@
 class Admin::ShiftsController < ApplicationController
 
-  before_filter :set_user, :only => [:index]
-
-  def all_shifts
-    @shifts = Shift.ordered
-    @shift = Shift.new
-  end
+  before_filter :check_if_admin
 
   def index
-    @shifts = @user.shifts.ordered
+    @shifts = Shift.ordered
     @shift = Shift.new
   end
 
@@ -38,24 +33,7 @@ class Admin::ShiftsController < ApplicationController
       msg = 'shift was deleted successfuly'
     end
 
-    msg = 'shift was deleted successfuly'
-    redirect_to admin_all_shifts_path, notice: msg
+    redirect_to admin_shifts_path, notice: msg
   end
-
-  private
-
-    def set_user
-      @user = User.find params[:id]
-    end
-
-  # def check_current_user
-  #   if params[:user_id]
-  #     @user = User.find(params[:user_id])
-  #     if @user != current_user
-  #       flash.now[:error] = "You dont have permission to view other users shift"
-  #       @user = current_user
-  #     end
-  #   end
-  # end
 
 end

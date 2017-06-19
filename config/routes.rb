@@ -7,9 +7,8 @@ Shifter2::Application.routes.draw do
         delete :delete_role
         get :edit_role
       end
-      resources :shifts
     end
-    get 'all_shifts', to: 'shifts#all_shifts'
+    resources :shifts
   end
 
   resources :users, except: [:index, :destroy] do
