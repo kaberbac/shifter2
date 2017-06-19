@@ -10,6 +10,16 @@ class Admin::UsersController < ApplicationController
     @user = User.new
   end
 
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      flash[:success] = "user created successfuly"
+      redirect_to admin_user_path(@user)
+    else
+      render 'new'
+    end
+  end
+
   def update
     user_update(params[:user], "Update succeeded!", 'edit' )
   end

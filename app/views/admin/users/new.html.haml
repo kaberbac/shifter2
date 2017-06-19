@@ -1,0 +1,26 @@
+- provide(:title, 'Shifter | Signup')
+
+%h1 Sign Up
+
+.row
+  .span6.offset3
+
+    =form_for [:admin, @user] do |f|
+      = render 'shared/user_error_messages'
+      = f.label 'first_name'
+      = f.text_field 'first_name'
+      %br
+      = f.label 'last_name'
+      = f.text_field 'last_name'
+      %br
+      = f.label 'email'
+      = f.text_field 'email'
+      %br
+      = f.label 'password'
+      = f.password_field 'password'
+      %br
+      = f.label 'password_confirmation', "Confirmation"
+      = f.password_field 'password_confirmation'
+      %br
+      = f.submit 'Signup', :class => 'btn btn-success'
+      = link_to 'Cancel', admin_users_path, :class => 'btn btn-danger'

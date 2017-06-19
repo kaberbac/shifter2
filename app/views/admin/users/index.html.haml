@@ -1,6 +1,10 @@
 %h1 Users index
 %h2 There #{is_pluralize(@users.length, 'user')}
 
+%h3
+  = link_to 'Add user', new_admin_user_path
+%br
+
 %table.table.table-striped.table-bordered.table-hover
   %tr
     %th id
