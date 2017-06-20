@@ -3,6 +3,7 @@
 = render 'shared/shift_error_messages'
 
 %h3 All Shifts
+= link_to 'Trigger outdater', trigger_outdater_admin_shifts_path, method: :put, class: 'btn btn-danger'
 
 %table.table.table-striped.table-bordered.table-hover
   %tr

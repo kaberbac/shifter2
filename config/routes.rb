@@ -12,6 +12,9 @@ Shifter2::Application.routes.draw do
       member do
         put :update_status
       end
+      collection do
+        put :trigger_outdater
+      end
     end
   end
 

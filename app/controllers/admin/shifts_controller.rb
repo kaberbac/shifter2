@@ -3,6 +3,12 @@ class Admin::ShiftsController < Admin::BaseController
   before_filter :set_shift, :only => [:destroy, :update_status]
   before_filter :set_shifts, :only => [:index, :destroy, :create, :update_status]
 
+  def trigger_outdater
+    ShiftOutdater.execute
+    flash[:success] = 'Shift outdater has been triggered'
+    redirect_to admin_shifts_path
+  end
+
   def update_status
     if @shift.update_attributes(status: params[:status])
       flash[:success] = "Shift updated successfuly"

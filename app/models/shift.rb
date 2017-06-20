@@ -3,7 +3,7 @@ class Shift < ActiveRecord::Base
   MAX_SHIFTS_PER_DAY = 2
   belongs_to :user
 
-  STATUSES = %w(pending approved rejected)
+  STATUSES = %w(pending approved rejected outdated)
 
   before_destroy :is_shift_pending?
 
@@ -16,6 +16,7 @@ class Shift < ActiveRecord::Base
   scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
   # return shifts for a given day_work
   scope :shift_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
+  scope :with_status, lambda { |status| where(status: status) }
 
   validates :user, presence: true
   validates :day_work, presence: true
@@ -34,6 +35,9 @@ class Shift < ActiveRecord::Base
   end
 
   def not_past_date
+    if self.status_was == 'pending' && self.status == 'outdated' && self.day_work.past? && self.persisted?
+      return true
+    end
     if self.day_work.past?
       errors.add(:date, 'date should be in future')
     end

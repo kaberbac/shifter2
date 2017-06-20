@@ -1,6 +1,6 @@
-class CreateApprovals < ActiveRecord::Migration
+class CreateShiftDecisions < ActiveRecord::Migration
   def change
-    create_table :approvals do |t|
+    create_table :shift_decisions do |t|
       t.integer :shift_id
       t.integer :user_id
       t.string :decision
