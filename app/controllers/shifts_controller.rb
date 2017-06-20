@@ -3,6 +3,8 @@ class ShiftsController < ApplicationController
   before_filter :set_shifts, :only => [:index, :destroy, :create]
   before_filter :set_shift, :only => [:destroy]
 
+
+
   def calendar
 
     #@year_weeks is a hash with key as week number and value the corresponding day
@@ -62,7 +64,6 @@ class ShiftsController < ApplicationController
     end
 
   end
-
 
   private
 

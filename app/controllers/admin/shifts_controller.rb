@@ -1,7 +1,17 @@
 class Admin::ShiftsController < Admin::BaseController
 
-  before_filter :set_shifts, :only => [:index, :destroy, :create]
-  before_filter :set_shift, :only => [:destroy]
+  before_filter :set_shift, :only => [:destroy, :update_status]
+  before_filter :set_shifts, :only => [:index, :destroy, :create, :update_status]
+
+  def update_status
+    if @shift.update_attributes(status: params[:status])
+      flash[:success] = "Shift updated successfuly"
+    else
+      flash[:error] = @shift.errors.full_messages.join('. ')
+    end
+
+    redirect_to admin_shifts_path
+  end
 
   def index
     @shift = Shift.new

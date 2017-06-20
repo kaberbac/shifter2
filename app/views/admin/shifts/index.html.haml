@@ -1,8 +1,5 @@
 %h2 There #{is_pluralize(@shifts.length, 'shift')}
 
--#%h3
--#  = link_to 'Add Shift', new_admin_user_path
--#%br
 = render 'shared/shift_error_messages'
 
 %h3 All Shifts
@@ -16,6 +13,8 @@
     %th status
     %th
     %th
+    %th
+    %th
     - @shifts.each do |shift|
       %tr
         %td= shift.id
@@ -25,6 +24,6 @@
         %td{:class => "#{shift.status}"}
           = shift.status
         %td= link_to 'Delete', admin_shift_path(shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}
-        %td= link_to 'Manage Shift', admin_shift_path(shift.id)
-        -#%h3 Add shift
-        -#= render 'new'
+        %td= link_to 'Approve', update_status_admin_shift_path(shift.id, status: 'approved'), method: :put, class: "btn btn-success", "data-no-turbolink" => true
+        %td= link_to 'Reject', update_status_admin_shift_path(shift.id, status: 'rejected'), method: :put, class: "btn btn-danger", "data-no-turbolink" => true
+        %td= link_to 'Put on hold', update_status_admin_shift_path(shift.id, status: 'pending'), method: :put, class: "btn btn-default", "data-no-turbolink" => true

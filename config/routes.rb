@@ -8,7 +8,11 @@ Shifter2::Application.routes.draw do
         get :edit_role
       end
     end
-    resources :shifts
+    resources :shifts do
+      member do
+        put :update_status
+      end
+    end
   end
 
   resources :users, except: [:index, :destroy] do
@@ -24,6 +28,7 @@ Shifter2::Application.routes.draw do
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/calendar', to: 'shifts#calendar'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
