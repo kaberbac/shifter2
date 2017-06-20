@@ -27,15 +27,4 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    def check_if_admin
-      if signed_in?
-        unless current_user.has_role?('admin')
-          flash[:error] = 'You do not have permission to view this page'
-          redirect_to root_path
-        end
-      else
-        sign_in_if_not_logged
-      end
-    end
-
 end

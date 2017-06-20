@@ -1,6 +1,5 @@
-class Admin::ShiftsController < ApplicationController
+class Admin::ShiftsController < Admin::BaseController
 
-  before_filter :check_if_admin
   before_filter :set_shifts, :only => [:index, :destroy, :create]
   before_filter :set_shift, :only => [:destroy]
 

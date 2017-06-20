@@ -25,6 +25,16 @@ class User < ActiveRecord::Base
     roles.include?(role_name)
   end
 
+  # check if user have role_name in a list of role_names
+  def has_role_in_roles_list?(role_name_list)
+    role_name_list.each do |role_name|
+      if self.has_role?(role_name)
+        return true
+      end
+    end
+    return false
+  end
+
 
   private
 
