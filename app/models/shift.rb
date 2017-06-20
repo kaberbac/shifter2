@@ -5,6 +5,8 @@ class Shift < ActiveRecord::Base
 
   STATUSES = %w(pending approved rejected)
 
+  before_destroy :is_shift_pending?
+
   before_validation(on: :create) do
     self.status ||= 'pending'
   end
@@ -23,6 +25,13 @@ class Shift < ActiveRecord::Base
   validate :check_max_shift_per_day
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
 
+
+  def is_shift_pending?
+    if self.status != 'pending'
+      self.errors[:base] = 'You can not delete approved or rejected status'
+      return false
+    end
+  end
 
   def not_past_date
     if self.day_work.past?

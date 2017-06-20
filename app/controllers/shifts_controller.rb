@@ -1,5 +1,8 @@
 class ShiftsController < ApplicationController
 
+  before_filter :set_shifts, :only => [:index, :destroy, :create]
+  before_filter :set_shift, :only => [:destroy]
+
   def calendar
 
     #@year_weeks is a hash with key as week number and value the corresponding day
@@ -26,7 +29,7 @@ class ShiftsController < ApplicationController
 
   def index
     check_current_user
-    @shifts = current_user.shifts.order("day_work ASC")
+    @shifts = current_user.shifts.ordered
     @shift = Shift.new
   end
 
@@ -47,21 +50,25 @@ class ShiftsController < ApplicationController
   end
 
   def destroy
-    @shift = Shift.find(params[:id])
-    msg=''
     if @shift.user_id != current_user.id
-      msg = 'You dont have permission to delete other users shifts'
-    else if @shift.status != 'pending'
-           msg = 'You can not delete approved or rejected status'
-         else
-           @shift.destroy
-           msg = 'shift was deleted successfuly'
-         end
+      flash[:error] = 'You dont have permission to delete other users shifts'
+
+    else  if @shift.destroy
+            flash[:success] = 'shift was deleted successfuly'
+          end
     end
-    redirect_to user_shifts_path(current_user.id), notice: msg
+    render 'index'
   end
 
   private
+
+  def set_shifts
+    @shifts = current_user.shifts.ordered
+  end
+
+  def set_shift
+    @shift = Shift.find(params[:id])
+  end
 
   def check_current_user
     if params[:user_id]

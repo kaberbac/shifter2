@@ -24,7 +24,7 @@
         %td= shift.day_work
         %td{:class => "#{shift.status}"}
           = shift.status
-        %td= (link_to 'Delete', admin_shift_path(shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}) if shift.status == 'pending'
+        %td= link_to 'Delete', admin_shift_path(shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}
         %td= link_to 'Manage Shift', admin_shift_path(shift.id)
         -#%h3 Add shift
         -#= render 'new'
