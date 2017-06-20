@@ -1,4 +1,4 @@
-class Approval < ActiveRecord::Base
+class ShiftDecision < ActiveRecord::Base
   attr_accessible :decision, :shift_id, :user_id
 
   DECISIONS = %w(admin manager other)
