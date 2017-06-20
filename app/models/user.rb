@@ -21,18 +21,29 @@ class User < ActiveRecord::Base
 
   # check if user have role_name
   def has_role?(role_name)
-    roles = self.roles.map {|role| role.name}
-    roles.include?(role_name)
+    # methode 1
+    # roles = self.roles.map {|role| role.name}
+    # roles.include?(role_name)
+
+    # methode 2
+    # self.roles.find do |role|
+    #  role.name == role_name
+    # end.present?
+
+    # methode 3
+    self.roles.where(name: role_name).exists?
   end
 
   # check if user have role_name in a list of role_names
   def has_role_in_roles_list?(role_name_list)
-    role_name_list.each do |role_name|
-      if self.has_role?(role_name)
-        return true
-      end
-    end
-    return false
+    # methode 1
+    # found_role = role_name_list.find do |role_name|
+    #   self.has_role?(role_name)
+    # end
+    # found_role.present?
+
+    # methode 2
+    self.roles.where(name: role_name_list).exists?
   end
 
 
