@@ -55,10 +55,14 @@ class ShiftsController < ApplicationController
 
     else  if @shift.destroy
             flash[:success] = 'shift was deleted successfuly'
+          else
+            flash[:error] = @shift.errors.full_messages.join('. ')
           end
+      redirect_to user_shifts_path(current_user.id)
     end
-    render 'index'
+
   end
+
 
   private
 

@@ -28,7 +28,7 @@ class Shift < ActiveRecord::Base
 
   def is_shift_pending?
     if self.status != 'pending'
-      self.errors[:base] = 'You can not delete approved or rejected status'
+      self.errors[:base] = 'You can delete only pending shifts'
       return false
     end
   end

@@ -27,8 +27,10 @@ class Admin::ShiftsController < ApplicationController
   def destroy
     if @shift.destroy
       flash[:success] = 'shift was deleted successfuly'
+    else
+      flash[:error] = @shift.errors.full_messages.join('. ')
     end
-    render 'index'
+    redirect_to admin_shifts_path
   end
 
   private
