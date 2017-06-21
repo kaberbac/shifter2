@@ -27,10 +27,6 @@ class Admin::UsersController < Admin::BaseController
   def edit
   end
 
-  def edit_role
-    @roles = Role.all
-  end
-
   def destroy
     @user.destroy
 
@@ -40,10 +36,17 @@ class Admin::UsersController < Admin::BaseController
   def show
   end
 
+
+  # TODO create UserRolesController and remove those actions from this controller
+  # (add_role, edit_role and delete_role should be transferred to their own controller)
   def add_role
     role = Role.find_by_name params[:role]
     @user.roles.push role if role
     redisplay_roles
+  end
+
+  def edit_role
+    @roles = Role.all
   end
 
   def delete_role

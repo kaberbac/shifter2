@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :shifts
-  has_and_belongs_to_many :roles, :uniq=>true
+  has_many :user_roles, dependent: :destroy
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -21,29 +21,12 @@ class User < ActiveRecord::Base
 
   # check if user have role_name
   def has_role?(role_name)
-    # methode 1
-    # roles = self.roles.map {|role| role.name}
-    # roles.include?(role_name)
-
-    # methode 2
-    # self.roles.find do |role|
-    #  role.name == role_name
-    # end.present?
-
-    # methode 3
-    self.roles.where(name: role_name).exists?
+    self.user_roles.where(role_name: role_name).exists?
   end
 
   # check if user have role_name in a list of role_names
   def has_role_in_roles_list?(role_name_list)
-    # methode 1
-    # found_role = role_name_list.find do |role_name|
-    #   self.has_role?(role_name)
-    # end
-    # found_role.present?
-
-    # methode 2
-    self.roles.where(name: role_name_list).exists?
+    has_role?(role_name_list)
   end
 
 

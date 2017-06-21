@@ -1,7 +1,8 @@
 #RoleList
-  This user has #{pluralize @user.roles.length, 'role'}
+  This user has #{pluralize @user.user_roles.length, 'role'}
   %ul
-  - @user.roles.each do |role|
+  - @user.user_roles.each do |user_role|
     %li
-      = role.name
-      [#{link_to 'Delete', delete_role_admin_user_path(@user, :role=>role.id), :method=>:delete, :confirm=>'Are you sure?'}]
+      = user_role.role_name
+      -# TODO: change Admin::UsersController#delete_role to Admin::UserRolesController::destroy
+      [#{link_to 'Delete', delete_role_admin_user_path(@user, :role=>user_role.id), :method=>:delete, :confirm=>'Are you sure?'}]
