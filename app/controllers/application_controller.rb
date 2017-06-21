@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
 
-  ROLES = %w(admin manager other)
-
   before_filter :sign_in_if_not_logged
 
   # Force signout to prevent CSRF attacks

@@ -3,13 +3,11 @@ class SessionsController < ApplicationController
   def new
   end
 
-  MODE_ADMIN = ['admin', 'manager']
-
   def create
     user = User.find_by_email(params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       sign_in user
-      if user.has_role_in_roles_list?(MODE_ADMIN)
+      if user.has_role_in_roles_list?(Admin::BaseController::ADMINISTRATION_ROLES)
         redirect_to admin_users_path
       else
         redirect_to user_shifts_path(user)
