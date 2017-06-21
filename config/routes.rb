@@ -2,11 +2,7 @@ Shifter2::Application.routes.draw do
 
   namespace :admin do
     resources :users do
-      member do
-        post :add_role
-        delete :delete_role
-        get :edit_role
-      end
+      resources :user_roles
     end
     resources :shifts do
       member do

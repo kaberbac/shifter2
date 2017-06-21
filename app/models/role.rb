@@ -13,6 +13,10 @@ class Role
     self.get_some_role!('manager')
   end
 
+  def self.all
+    AVAILABLE_ROLES
+  end
+
   private
 
   def self.get_some_role!(role_name_to_find)

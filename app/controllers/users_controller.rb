@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to Shifter2!"
+      flash[:success] = 'Welcome to Shifter2!'
       redirect_to user_shifts_path(@user)
     else
       render 'new'
@@ -30,13 +30,13 @@ class UsersController < ApplicationController
 
     if params[:user][:old_password] || params[:user][:password] || params[:user][:password_confirmation]
       if @user.authenticate(params[:user][:old_password])
-        user_update(params[:user].except(:old_password), "Password change succeeded!", 'passwordchange' )
+        user_update(params[:user].except(:old_password), 'Password change succeeded!', 'passwordchange' )
       else
-        flash.now[:error] = "Old password not valid!"
+        flash.now[:error] = 'Old password not valid!'
         render 'passwordchange'
       end
     else
-      user_update(params[:user], "Update succeeded!", 'edit' )
+      user_update(params[:user], 'Update succeeded!', 'edit' )
     end
   end
 
@@ -50,7 +50,7 @@ class UsersController < ApplicationController
   def check_current_user
     @user = User.find(params[:id])
     if @user != current_user
-      flash.now[:error] = "You dont have permission to view/edit other users profile"
+      flash.now[:error] = 'You dont have permission to view/edit other users profile'
       @user = current_user
     end
   end

@@ -1,0 +1,22 @@
+%h1 User Role
+%b Id:
+= @user.id
+%br
+%b Name:
+= @user.full_name
+%br
+%b Email:
+= @user.email
+
+%hr
+%h2 Roles
+%hr
+= render :partial=>'admin/shared/role_list'
+%hr
+#addRole
+  = form_for [:admin, @user, @user.user_roles.new] do |f|
+    = f.label 'Add Role:'
+    = f.select :role_name, options_for_select(Role.all)
+    = f.submit 'Add'
+%hr
+= link_to 'Return to User List', [:admin, User]
