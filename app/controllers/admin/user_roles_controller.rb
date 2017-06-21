@@ -4,11 +4,12 @@ class Admin::UserRolesController < Admin::BaseController
 
   def create
     selected_role = params[:user_role][:role_name]
-    if @user.has_role?(selected_role)
-      flash[:error] = "#{selected_role} role is already given to user : #{@user.full_name}"
-    else
-      @user.user_roles.create!(role_name: selected_role) if Role.all.include? selected_role
+
+    @user_role = @user.user_roles.new(role_name: selected_role)
+    if @user_role.save
       flash[:success] = "#{selected_role} role is given to user : #{@user.full_name} successfuly"
+    else
+      flash[:error] = @user_role.errors.full_messages.join('. ')
     end
 
     redirect_to admin_user_user_roles_path(@user.id)
