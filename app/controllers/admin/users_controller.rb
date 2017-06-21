@@ -1,6 +1,5 @@
 class Admin::UsersController < Admin::BaseController
   before_filter :set_user, :except=>[:index, :new, :create]
-  skip_before_filter :sign_in_if_not_logged, :all
 
   def index
     @users = User.all
