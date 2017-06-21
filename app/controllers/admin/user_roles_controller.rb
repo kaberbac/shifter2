@@ -15,10 +15,15 @@ class Admin::UserRolesController < Admin::BaseController
   end
 
   def index
+    @roles = Role.all - @user.user_roles.map{|u| u[:role_name]}
   end
 
   def destroy
-    @user.user_roles.destroy(params[:id])
+
+    if @user.user_roles.destroy(params[:id])
+      flash[:success] = "role has been removed from user : #{@user.full_name} successfuly"
+    end
+
     redirect_to admin_user_user_roles_path(@user.id)
   end
 

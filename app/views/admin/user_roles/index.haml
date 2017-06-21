@@ -16,7 +16,12 @@
 #addRole
   = form_for [:admin, @user, @user.user_roles.new] do |f|
     = f.label 'Add Role:'
-    = f.select :role_name, options_for_select(Role.all)
-    = f.submit 'Add'
+    - if @roles.present?
+      = f.select :role_name, options_for_select(@roles)
+      = f.submit 'Add'
+    - else
+      .alert.alert-info
+        %strong Info!
+        No more roles available to add
 %hr
 = link_to 'Return to User List', [:admin, User]
