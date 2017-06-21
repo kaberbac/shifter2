@@ -11,7 +11,7 @@ class Admin::UserRolesController < Admin::BaseController
       flash[:success] = "#{selected_role} role is given to user : #{@user.full_name} successfuly"
     end
 
-    redisplay_roles
+    redirect_to admin_user_user_roles_path(@user.id)
   end
 
   def index
@@ -19,20 +19,13 @@ class Admin::UserRolesController < Admin::BaseController
 
   def destroy
     @user.user_roles.destroy(params[:id])
-    redisplay_roles
+    redirect_to admin_user_user_roles_path(@user.id)
   end
 
   private
 
   def set_user
     @user = User.find(params[:user_id])
-  end
-
-  def redisplay_roles
-    respond_to do |format|
-      format.html { redirect_to admin_user_user_roles_path(@user.id) }
-      format.js { render :redisplay_roles }
-    end
   end
 
 end
