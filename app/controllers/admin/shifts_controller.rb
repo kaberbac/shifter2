@@ -33,11 +33,16 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def destroy
-    if @shift.destroy
-      flash[:success] = 'shift was deleted successfuly'
+    if current_user.is_admin? || current_user.id == @shift.user_id
+      if @shift.destroy
+        flash[:success] = 'shift was deleted successfuly'
+      else
+        flash[:error] = @shift.errors.full_messages.join('. ')
+      end
     else
-      flash[:error] = @shift.errors.full_messages.join('. ')
+      flash[:error] = 'You are not allowed to delete other pending/outdated shifts'
     end
+
     redirect_to admin_shifts_path
   end
 

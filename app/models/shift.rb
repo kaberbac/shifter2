@@ -29,7 +29,7 @@ class Shift < ActiveRecord::Base
 
 
   def check_shift_pending?
-    if self.status != 'pending'
+    if self.status != 'pending' && self.status != 'outdated'
       self.errors[:base] = 'You can delete only pending/outdated shifts'
       return false
     end
