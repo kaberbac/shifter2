@@ -4,7 +4,7 @@ class UserRole < ActiveRecord::Base
   belongs_to :user
 
   validates :role_name, inclusion: { in: Role::AVAILABLE_ROLES }, :uniqueness => {:scope => :user_id}
-  validate :is_last_admin?
+  validate :is_last_admin?, on: :destroy
   validates :user, presence: true
 
   def is_last_admin?

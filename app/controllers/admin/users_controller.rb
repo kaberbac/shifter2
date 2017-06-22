@@ -20,7 +20,15 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def update
-    user_update(params[:user], 'Update succeeded!', 'edit' )
+    if @user.update_attributes(params[:user])
+      if @user == current_user
+        cookies.permanent[:remember_token] = @user.remember_token
+      end
+      flash[:success] = 'Update succeeded!'
+      redirect_to admin_user_path(@user)
+    else
+      render 'edit'
+    end
   end
 
   def edit
@@ -40,18 +48,6 @@ class Admin::UsersController < Admin::BaseController
 
   def set_user
     @user = User.find params[:id]
-  end
-
-  def user_update(params, msg, goto )
-    if @user.update_attributes(params)
-      if @user == current_user
-        cookies.permanent[:remember_token] = @user.remember_token
-      end
-      flash[:success] = msg
-      redirect_to admin_user_path(@user)
-    else
-      render goto
-    end
   end
 
 end
