@@ -1,6 +1,6 @@
 class Admin::ShiftsController < Admin::BaseController
 
-  before_filter :set_shift, :only => [:destroy, :update_status]
+  before_filter :set_shift, :only => [:destroy, :update_status, :shift_update]
   before_filter :set_shifts, :only => [:index, :destroy, :create, :update_status]
 
   def trigger_outdater
@@ -14,11 +14,11 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def update_status
-    if current_user.is_manager? && current_user.id != @shift.user_id
-      if @shift.update_attributes(status: params[:status])
-        flash[:success] = "Shift updated successfuly"
+    if current_user.is_manager? && current_user.id != @shift.user_id || current_user.is_admin?
+      if !current_user.is_admin? && (@shift.status == 'approved' || @shift.status == 'rejected')
+        flash[:error] = 'You are not allowed to clear approved/rejected shift'
       else
-        flash[:error] = @shift.errors.full_messages.join('. ')
+        shift_update
       end
     else
       flash[:error] = 'You are not allowed to approve or reject your own shifts'
@@ -44,6 +44,14 @@ class Admin::ShiftsController < Admin::BaseController
     end
 
     redirect_to admin_shifts_path
+  end
+
+  def shift_update
+    if @shift.update_attributes(status: params[:status])
+      flash[:success] = 'Shift updated successfuly'
+    else
+      flash[:error] = @shift.errors.full_messages.join('. ')
+    end
   end
 
   private

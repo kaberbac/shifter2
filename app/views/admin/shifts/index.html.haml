@@ -37,6 +37,6 @@
             = link_to 'Reject', update_status_admin_shift_path(shift.id, status: 'rejected'),
             method: :put, class: "btn btn-danger", "data-no-turbolink" => true
         %td
-          - if !shift.is_shift_pending? && !shift.day_work.past?
+          - if !shift.is_shift_pending? && !shift.day_work.past? && current_user.is_admin?
             = link_to 'Put pending', update_status_admin_shift_path(shift.id, status: 'pending'),
             method: :put, class: "btn btn-default", "data-no-turbolink" => true
