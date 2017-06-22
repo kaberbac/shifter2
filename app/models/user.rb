@@ -19,6 +19,14 @@ class User < ActiveRecord::Base
   end
 
 
+  def is_admin?
+    self.has_role?(Role.get_admin!)
+  end
+
+  def is_manager?
+    self.has_role?(Role.get_manager!)
+  end
+
   # check if user have role_name
   def has_role?(role_name)
     self.user_roles.where(role_name: role_name).exists?
@@ -27,6 +35,10 @@ class User < ActiveRecord::Base
   # check if user have role_name in a list of role_names
   def has_role_in_roles_list?(role_name_list)
     has_role?(role_name_list)
+  end
+
+  def get_roles
+    self.user_roles.map{|role| role[:role_name]}
   end
 
 

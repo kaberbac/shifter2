@@ -14,11 +14,16 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def update_status
-    if @shift.update_attributes(status: params[:status])
-      flash[:success] = "Shift updated successfuly"
+    if current_user.is_manager? && current_user.id != @shift.user_id
+      if @shift.update_attributes(status: params[:status])
+        flash[:success] = "Shift updated successfuly"
+      else
+        flash[:error] = @shift.errors.full_messages.join('. ')
+      end
     else
-      flash[:error] = @shift.errors.full_messages.join('. ')
+      flash[:error] = 'You are not allowed to approve or reject your own shifts'
     end
+
 
     redirect_to admin_shifts_path
   end
