@@ -15,7 +15,7 @@ class Shift < ActiveRecord::Base
   scope :ordered, order(:day_work)
   scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
   # return shifts for a given day_work
-  scope :shift_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
+  scope :shifts_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
   scope :with_status, lambda { |status| where(status: status) }
 
   validates :user, presence: true
@@ -44,7 +44,10 @@ class Shift < ActiveRecord::Base
   end
 
   def check_max_shift_per_day
-    if self.class.shift_day_work(self.day_work).count >= MAX_SHIFTS_PER_DAY
+    shifts_to_count = self.class.shifts_day_work(self.day_work) # shifts for a given day_work
+    shifts_to_count = shifts_to_count.where("id != ?", self.id) if self.persisted? # in case of update, we dont count current shift
+
+    if shifts_to_count.count >= MAX_SHIFTS_PER_DAY
       errors.add(:date, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " shifts per day is allowed")
     end
   end
