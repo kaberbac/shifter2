@@ -5,7 +5,10 @@
         %nav
           %ul.nav.pull-right
             - if signed_in?
-              - if current_user.has_role?('admin')
+              %li#fat-menu.dropdown
+                %a.dropdown-toggle{"data-toggle" => "dropdown"}
+                  = "logged as :  #{current_user.full_name} #{current_user.get_roles}"
+              - if current_user.has_role?(Role.get_admin!) || current_user.has_role?(Role.get_manager!)
                 %li#fat-menu.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                     Admin

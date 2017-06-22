@@ -2,7 +2,7 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 
-unless UserRole.where(role_name: 'admin').exists?
+unless UserRole.where(role_name: Role.get_admin!).exists?
   admin_user = User.find_by_email("admin@email.com")
   unless admin_user.present?
     admin_user = User.create!(first_name: "iam", last_name: "theboss", email: "admin@email.com", password: "123456")
