@@ -21,8 +21,12 @@ class Admin::UserRolesController < Admin::BaseController
 
   def destroy
 
-    if @user.user_roles.destroy(params[:id])
+    user_role = @user.user_roles.find(params[:id])
+    if user_role.is_last_admin?
+      user_role.destroy
       flash[:success] = "role has been removed from user : #{@user.full_name} successfuly"
+    else
+      flash[:error] = user_role.errors.full_messages.join('. ')
     end
 
     redirect_to admin_user_user_roles_path(@user.id)
