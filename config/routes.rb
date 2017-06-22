@@ -2,9 +2,9 @@ Shifter2::Application.routes.draw do
 
   namespace :admin do
     resources :users do
-      resources :user_roles
+      resources :user_roles, only: [:create, :index, :destroy]
     end
-    resources :shifts do
+    resources :shifts, only: [:index, :destroy] do
       member do
         put :update_status
       end
