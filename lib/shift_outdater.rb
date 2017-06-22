@@ -5,5 +5,6 @@ module ShiftOutdater
     shifts_to_outdate.each do |shift|
       shift.update_attributes!(status: 'outdated')
     end
+    return shifts_to_outdate.present?
   end
 end

@@ -4,8 +4,12 @@ class Admin::ShiftsController < Admin::BaseController
   before_filter :set_shifts, :only => [:index, :destroy, :create, :update_status]
 
   def trigger_outdater
-    ShiftOutdater.execute
-    flash[:success] = 'Shift outdater has been triggered'
+    if ShiftOutdater.execute
+      flash[:success] = 'Shift outdater has been triggered'
+    else
+      flash[:error] = 'No shift still pending in the past'
+    end
+
     redirect_to admin_shifts_path
   end
 

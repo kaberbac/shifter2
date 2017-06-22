@@ -59,7 +59,7 @@ class Shift < ActiveRecord::Base
       self.errors[:base] = 'no change status have been detected'
     end
     if [self.status_was, self.status] == ['outdated', 'approved'] || [self.status_was, self.status] == ['outdated', 'rejected']
-      self.errors[:base] = 'outdated status cant be changed'
+      self.errors[:base] = 'outdated status cant be approved or rejected and vice versa'
     end
   end
 
