@@ -5,7 +5,7 @@ class Shift < ActiveRecord::Base
 
   STATUSES = %w(pending approved rejected outdated)
 
-  before_destroy :check_shift_pending?
+  before_destroy :check_before_delete_shift?
 
   before_validation(on: :create) do
     self.status ||= 'pending'
@@ -28,7 +28,7 @@ class Shift < ActiveRecord::Base
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
 
 
-  def check_shift_pending?
+  def check_before_delete_shift?
     if self.status != 'pending' && self.status != 'outdated'
       self.errors[:base] = 'You can delete only pending/outdated shifts'
       return false
@@ -51,15 +51,14 @@ class Shift < ActiveRecord::Base
     self.status == 'outdated'
   end
 
-  def check_traited_shift # approved status cant be changed to rejected and vice versa
-    if [self.status_was, self.status] == ['approved', 'rejected'] || [self.status_was, self.status] == ['rejected', 'approved']
-      self.errors[:base] = 'Approved status cant be changed to rejected and vice versa'
-    end
-    if self.status_was == self.status && self.persisted?
-      self.errors[:base] = 'no change status have been detected'
-    end
-    if [self.status_was, self.status] == ['outdated', 'approved'] || [self.status_was, self.status] == ['outdated', 'rejected']
-      self.errors[:base] = 'outdated status cant be approved or rejected and vice versa'
+  def check_traited_shift # approved status cant be changed to rejected and vice versa, can only be changed to pending
+    if self.status_changed?
+      if %w( approved rejected ).include?(self.status_was) && self.status != 'pending'
+        self.errors[:base] = 'Approved/rejected shifts can only be reverted back to pending'
+      end
+      if self.status_was == 'outdated'
+        self.errors[:base] = 'cant update outdated shift'
+      end
     end
   end
 
