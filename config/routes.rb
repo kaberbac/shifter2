@@ -6,7 +6,9 @@ Shifter2::Application.routes.draw do
     end
     resources :shifts, only: [:index, :destroy] do
       member do
-        put :update_status
+        put :approve
+        put :reject
+        put :become_pending
       end
       collection do
         put :trigger_outdater

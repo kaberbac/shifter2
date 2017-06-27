@@ -53,13 +53,13 @@ class Shift < ActiveRecord::Base
 
   def check_traited_shift # approved status cant be changed to rejected and vice versa, can only be changed to pending
     if self.status_changed?
-      if %w( approved rejected ).include?(self.status_was)
-        if self.day_work.past?
-          self.errors[:base] = 'past Approved/rejected shifts cant be changed'
-        else if !self.is_shift_pending?
+      if self.day_work.past?
+        self.errors[:base] = 'past shifts can be changed only to outdated'
+      else if %w( approved rejected ).include?(self.status_was)
+             if !self.is_shift_pending?
                self.errors[:base] = 'Approved/rejected shifts can only be reverted back to pending'
              end
-        end
+           end
       end
       if self.status_was == 'outdated'
         self.errors[:base] = 'cant update outdated shift'

@@ -30,13 +30,13 @@
             data: {confirm: 'Are you sure to delete?'}
         %td
           - if shift.is_shift_pending? && !shift.day_work.past?
-            = link_to 'Approve', update_status_admin_shift_path(shift.id, status: 'approved'),
+            = link_to 'Approve', approve_admin_shift_path(shift.id),
             method: :put, class: "btn btn-success", "data-no-turbolink" => true
         %td
           - if shift.is_shift_pending? && !shift.day_work.past?
-            = link_to 'Reject', update_status_admin_shift_path(shift.id, status: 'rejected'),
+            = link_to 'Reject', reject_admin_shift_path(shift.id),
             method: :put, class: "btn btn-danger", "data-no-turbolink" => true
         %td
           - if !shift.is_shift_pending? && !shift.day_work.past? && current_user.is_admin?
-            = link_to 'Put pending', update_status_admin_shift_path(shift.id, status: 'pending'),
+            = link_to 'Put pending', become_pending_admin_shift_path(shift.id),
             method: :put, class: "btn btn-default", "data-no-turbolink" => true
