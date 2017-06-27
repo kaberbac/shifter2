@@ -1,6 +1,6 @@
 class Admin::UserRolesController < Admin::BaseController
 
-  before_filter :set_user
+  before_filter :set_user, :require_admin
 
   def create
     selected_role = params[:user_role][:role_name]
@@ -36,6 +36,14 @@ class Admin::UserRolesController < Admin::BaseController
 
   def set_user
     @user = User.find(params[:user_id])
+  end
+
+  def require_admin
+    if !current_user.is_admin?
+      flash[:error] = 'only admin can manage roles'
+      redirect_to admin_users_path
+      return false
+    end
   end
 
 end
