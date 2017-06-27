@@ -1,7 +1,8 @@
 class Admin::ShiftsController < Admin::BaseController
 
   before_filter :set_shift, :only => [:destroy, :approve, :reject, :become_pending]
-  before_filter :set_shifts, :only => [:index, :destroy, :create, :approve, :reject, :become_pending]
+  before_filter :set_shifts, :only => [:index, :destroy, :approve, :reject, :become_pending]
+  before_filter :check_can_change_status, :only => [:approve, :reject]
 
   def trigger_outdater
     if ShiftOutdater.execute
@@ -10,23 +11,6 @@ class Admin::ShiftsController < Admin::BaseController
       flash[:error] = 'No shift still pending in the past'
     end
 
-    redirect_to admin_shifts_path
-  end
-
-  def approve
-    check_change_status('approved')
-  end
-
-  def reject
-    check_change_status('rejected')
-  end
-
-  def become_pending
-    if current_user.is_admin?
-      change_status('pending')
-    else
-      flash[:error] = 'Only admin can clear a shift decision'
-    end
     redirect_to admin_shifts_path
   end
 
@@ -49,6 +33,25 @@ class Admin::ShiftsController < Admin::BaseController
     redirect_to admin_shifts_path
   end
 
+  def approve
+    change_status('approved')
+    redirect_to admin_shifts_path
+  end
+
+  def reject
+    change_status('rejected')
+    redirect_to admin_shifts_path
+  end
+
+  def become_pending
+    if current_user.is_admin?
+      change_status('pending')
+    else
+      flash[:error] = 'Only admin can clear a shift decision'
+    end
+    redirect_to admin_shifts_path
+  end
+
   private
 
   def set_shift
@@ -59,27 +62,21 @@ class Admin::ShiftsController < Admin::BaseController
     @shifts = Shift.ordered
   end
 
-  def change_status(decision)
-    if @shift.update_attributes(status: decision)
-      flash[:success] = 'Shift updated successfuly'
-      ShiftDecision.create!(shift_id: @shift.id, user_id: @shift.user_id, decision: decision)
-    else
-      flash[:error] = @shift.errors.full_messages.join('. ')
+  def check_can_change_status
+    if current_user.is_manager? && current_user == @shift.user
+      flash[:error] = 'You are not allowed to approve or reject your own shifts'
+      redirect_to admin_shifts_path
+      return false
     end
   end
 
-  def check_change_status(decision)
-    if current_user.is_manager? && !current_user.is_admin?
-      if current_user == @shift.user
-        flash[:error] = 'You are not allowed to approve or reject your own shifts'
-      else
-        change_status(decision)
-      end
-    else if current_user.is_admin?
-           change_status(decision)
-         end
+  def change_status(decision)
+    if @shift.update_attributes(status: decision)
+      flash[:success] = 'Shift updated successfuly'
+      ShiftDecision.create!(shift_id: @shift.id, user_id: current_user.id, decision: decision)
+    else
+      flash[:error] = @shift.errors.full_messages.join('. ')
     end
-    redirect_to admin_shifts_path
   end
 
 end

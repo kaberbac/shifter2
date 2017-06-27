@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   has_many :shifts
-  has_many :ShiftDecisions, dependent: :destroy
+  has_many :shift_decisions, dependent: :destroy
   has_many :user_roles, dependent: :destroy
 
   before_save { |user| user.email = email.downcase }
