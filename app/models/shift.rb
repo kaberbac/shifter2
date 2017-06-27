@@ -29,7 +29,7 @@ class Shift < ActiveRecord::Base
 
 
   def check_before_delete_shift?
-    if self.status != 'pending' && self.status != 'outdated'
+    if !self.is_shift_pending? && !self.is_shift_outdated?
       self.errors[:base] = 'You can delete only pending/outdated shifts'
       return false
     end
@@ -53,8 +53,13 @@ class Shift < ActiveRecord::Base
 
   def check_traited_shift # approved status cant be changed to rejected and vice versa, can only be changed to pending
     if self.status_changed?
-      if %w( approved rejected ).include?(self.status_was) && self.status != 'pending'
-        self.errors[:base] = 'Approved/rejected shifts can only be reverted back to pending'
+      if %w( approved rejected ).include?(self.status_was)
+        if self.day_work.past?
+          self.errors[:base] = 'past Approved/rejected shifts cant be changed'
+        else if !self.is_shift_pending?
+               self.errors[:base] = 'Approved/rejected shifts can only be reverted back to pending'
+             end
+        end
       end
       if self.status_was == 'outdated'
         self.errors[:base] = 'cant update outdated shift'
@@ -63,7 +68,7 @@ class Shift < ActiveRecord::Base
   end
 
   def not_past_date
-    if self.status_was == 'pending' && self.status == 'outdated' && self.day_work.past? && self.persisted?
+    if self.status_was == 'pending' && self.is_shift_outdated? && self.day_work.past? && self.persisted?
       return true
     end
     if self.day_work.past?

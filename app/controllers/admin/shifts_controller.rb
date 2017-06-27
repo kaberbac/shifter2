@@ -15,7 +15,7 @@ class Admin::ShiftsController < Admin::BaseController
 
   def update_status
     if current_user.is_manager? && current_user.id != @shift.user_id || current_user.is_admin?
-      if !current_user.is_admin? && (@shift.status == 'approved' || @shift.status == 'rejected')
+      if !current_user.is_admin? && (@shift.is_shift_approved? || @shift.is_shift_rejected?)
         flash[:error] = 'You are not allowed to clear approved/rejected shift'
       else
         shift_update
