@@ -1,0 +1,9 @@
+%table.table.table-striped.table-bordered.table-hover
+  %tr
+    %th Shift Activity
+    -@shiftdecisions.each do |shiftdecison|
+      %tr
+        %td
+          ="[#{shiftdecison.created_at}] #{shiftdecison.user.full_name}'s shift id #{shiftdecison.id} has been changed to "
+          %span{:class => "#{shiftdecison.decision}"}
+            "#{shiftdecison.decision}"

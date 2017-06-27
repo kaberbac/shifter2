@@ -2,6 +2,7 @@ class Shift < ActiveRecord::Base
   attr_accessible :day_work, :user_id, :status
   MAX_SHIFTS_PER_DAY = 2
   belongs_to :user
+  has_many :ShiftDecisions, dependent: :destroy
 
   STATUSES = %w(pending approved rejected outdated)
 

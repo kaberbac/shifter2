@@ -32,6 +32,7 @@ class Admin::ShiftsController < Admin::BaseController
 
   def index
     @shift = Shift.new
+    @shiftdecisions = ShiftDecision.ordered
   end
 
   def destroy
@@ -61,6 +62,7 @@ class Admin::ShiftsController < Admin::BaseController
   def change_status(decision)
     if @shift.update_attributes(status: decision)
       flash[:success] = 'Shift updated successfuly'
+      ShiftDecision.create!(shift_id: @shift.id, user_id: @shift.user_id, decision: decision)
     else
       flash[:error] = @shift.errors.full_messages.join('. ')
     end

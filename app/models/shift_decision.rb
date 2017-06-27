@@ -1,10 +1,13 @@
 class ShiftDecision < ActiveRecord::Base
   attr_accessible :decision, :shift_id, :user_id
 
-  DECISIONS = %w(admin manager other)
+  belongs_to :user
+  belongs_to :shift
+
+  scope :ordered, order('created_at desc')
 
   validates :shift_id, presence: true
   validates :user_id, presence: true
-  validates :decision, presence: true, uniqueness: true, :inclusion => {:in => DECISIONS}
+  validates :decision, presence: true, :inclusion => {:in => Shift::STATUSES}
 
 end
