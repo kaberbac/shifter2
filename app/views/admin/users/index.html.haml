@@ -7,9 +7,8 @@
 
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th id
-    %th email
-    %th full_name
+    %th Name
+    %th Email
     %th role
     %th
     %th
@@ -17,9 +16,8 @@
       %th
     - @users.each do |user|
       %tr
-        %td= user.id
-        %td= user.email
         %td= link_to user.full_name, admin_user_path(user.id)
+        %td= user.email
         %td
           %ul
           - user.user_roles.each do |user_role|

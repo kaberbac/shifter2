@@ -1,9 +1,16 @@
+%h2 History change shift status
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th Shift Activity
+    %th Modification date
+    %th Shift owner
+    %th Changed by
+    %th Shift date
+    %th Decision
     -@shiftdecisions.each do |shiftdecison|
       %tr
-        %td
-          ="[#{shiftdecison.created_at}] #{shiftdecison.user.full_name}'s shift id #{shiftdecison.id} has been changed to "
-          %span{:class => "#{shiftdecison.decision}"}
-            "#{shiftdecison.decision}"
+        %td= shiftdecison.created_at
+        %td= shiftdecison.shift.user.full_name
+        %td= shiftdecison.user.full_name
+        %td= shiftdecison.shift.day_work
+        %td{:class => "#{shiftdecison.decision}"}
+          =shiftdecison.decision

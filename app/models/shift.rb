@@ -13,7 +13,7 @@ class Shift < ActiveRecord::Base
   end
 
   # scope :method_name, lambda { |variable| where(some_attribute: variable) }
-  scope :ordered, order(:day_work)
+  scope :ordered, order('day_work desc')
   scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
   # return shifts for a given day_work
   scope :shifts_day_work, lambda { |day_chosen| where(day_work: day_chosen)}

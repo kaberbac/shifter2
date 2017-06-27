@@ -41,6 +41,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def show
+    redirect_to admin_user_user_roles_path(@user.id)
   end
 
 

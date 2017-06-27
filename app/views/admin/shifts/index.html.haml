@@ -7,8 +7,6 @@
 
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th id
-    %th user_id
     %th full name
     %th day_work
     %th status
@@ -18,8 +16,6 @@
     %th Put Pending
     - @shifts.each do |shift|
       %tr
-        %td= shift.id
-        %td= shift.user_id
         %td= shift.user.full_name
         %td= shift.day_work
         %td{:class => "#{shift.status}"}
