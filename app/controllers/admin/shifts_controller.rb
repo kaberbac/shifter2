@@ -1,6 +1,6 @@
 class Admin::ShiftsController < Admin::BaseController
 
-  before_filter :set_shift, :only => [:destroy, :approve, :reject, :become_pending]
+  before_filter :set_shift, :only => [:destroy, :approve, :reject, :become_pending, :has_history_changes?, :history_status]
   before_filter :set_shifts, :only => [:index, :destroy, :approve, :reject, :become_pending]
   before_filter :check_can_change_status, :only => [:approve, :reject]
 
@@ -17,6 +17,10 @@ class Admin::ShiftsController < Admin::BaseController
   def index
     @shift = Shift.new
     @shiftdecisions = ShiftDecision.ordered
+  end
+
+  def history_status
+    @shiftdecisions =  @shift.get_history_status
   end
 
   def destroy
@@ -52,6 +56,7 @@ class Admin::ShiftsController < Admin::BaseController
     redirect_to admin_shifts_path
   end
 
+
   private
 
   def set_shift
@@ -63,7 +68,7 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def check_can_change_status
-    if current_user.is_manager? && current_user == @shift.user
+    if current_user.is_manager? && current_user == @shift.user && !current_user.is_admin?
       flash[:error] = 'You are not allowed to approve or reject your own shifts'
       redirect_to admin_shifts_path
       return false

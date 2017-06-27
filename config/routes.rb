@@ -9,6 +9,7 @@ Shifter2::Application.routes.draw do
         put :approve
         put :reject
         put :become_pending
+        get :history_status
       end
       collection do
         put :trigger_outdater

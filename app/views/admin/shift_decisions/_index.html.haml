@@ -6,11 +6,11 @@
     %th Changed by
     %th Shift date
     %th Decision
-    -@shiftdecisions.each do |shiftdecison|
+    -collection.each do |shift_decision|
       %tr
-        %td= shiftdecison.created_at
-        %td= shiftdecison.shift.user.full_name
-        %td= shiftdecison.user.full_name
-        %td= shiftdecison.shift.day_work
-        %td{:class => "#{shiftdecison.decision}"}
-          =shiftdecison.decision
+        %td= shift_decision.created_at
+        %td= shift_decision.shift.user.full_name
+        %td= shift_decision.user.full_name
+        %td= shift_decision.shift.day_work
+        %td{:class => "#{shift_decision.decision}"}
+          =shift_decision.decision
