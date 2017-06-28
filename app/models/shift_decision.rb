@@ -5,7 +5,6 @@ class ShiftDecision < ActiveRecord::Base
   belongs_to :shift
 
   scope :ordered, order('created_at desc')
-  scope :history_status, lambda { |shiftid| where(shift_id: shiftid) }
 
   validates :shift_id, presence: true
   validates :user_id, presence: true

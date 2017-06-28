@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :old_password, :state
   has_secure_password
 
-  has_many :shifts
-  has_many :shift_decisions, dependent: :destroy
+  has_many :shifts, dependent: :restrict
+  has_many :shift_decisions, dependent: :restrict
   has_many :user_roles, dependent: :destroy
 
   STATES = %w(inactive active)

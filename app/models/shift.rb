@@ -97,9 +97,5 @@ class Shift < ActiveRecord::Base
     end
   end
 
-  def get_history_status
-    shift_decisions.history_status(self.id)
-  end
-
 
 end
