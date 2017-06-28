@@ -1,5 +1,5 @@
 %h1 Users index
-%h2 There #{is_pluralize(@users.length, 'user')}
+%h2 There #{is_pluralize(User.all.length, 'user')}
 
 %h3
   = link_to 'Add user', new_admin_user_path

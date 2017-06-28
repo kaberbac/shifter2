@@ -2,7 +2,7 @@
 
 = render 'shared/shift_error_messages'
 
-%h3 There #{is_pluralize(@shifts.length, 'shift')}
+%h3 There #{is_pluralize(Shift.all.length, 'shift')}
 
 = will_paginate @shifts, :param_name => 'shifts_page'
 %table.table.table-striped.table-bordered.table-hover

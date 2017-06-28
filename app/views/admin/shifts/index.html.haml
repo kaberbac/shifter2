@@ -1,4 +1,4 @@
-%h2 There #{is_pluralize(@shifts.length, 'shift')}
+%h2 There #{is_pluralize(Shift.all.length, 'shift')}
 
 = render 'shared/shift_error_messages'
 
