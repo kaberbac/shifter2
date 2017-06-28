@@ -21,7 +21,7 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def history_status
-    @shiftdecisions =  @shift.get_history_status
+    @shiftdecisions =  @shift.get_history_status.paginate(page: params[:page])
   end
 
   def destroy
