@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }, unless: lambda { self.persisted? && self.password.nil? }
 
+  # will_paginate how many items shown per page
+  self.per_page = 10
+
   def full_name
     first_name.capitalize + ' ' + last_name.upcase
   end

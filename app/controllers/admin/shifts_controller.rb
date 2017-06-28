@@ -1,6 +1,6 @@
 class Admin::ShiftsController < Admin::BaseController
 
-  before_filter :set_shift, :only => [:destroy, :approve, :reject, :become_pending, :has_history_changes?, :history_status]
+  before_filter :set_shift, :only => [:destroy, :approve, :reject, :become_pending, :history_status]
   before_filter :set_shifts, :only => [:index, :destroy, :approve, :reject, :become_pending]
   before_filter :check_can_change_status, :only => [:approve, :reject]
 
@@ -16,8 +16,8 @@ class Admin::ShiftsController < Admin::BaseController
 
   def index
     @shift = Shift.new
-    @shifts = @shifts.paginate(page: params[:page], per_page: 10)
-    @shiftdecisions = ShiftDecision.ordered.paginate(page: params[:page], per_page: 10)
+    @shifts = @shifts.paginate(page: params[:page])
+    @shiftdecisions = ShiftDecision.ordered.paginate(page: params[:page])
   end
 
   def history_status

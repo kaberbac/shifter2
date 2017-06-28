@@ -11,4 +11,7 @@ class ShiftDecision < ActiveRecord::Base
   validates :user_id, presence: true
   validates :decision, presence: true, :inclusion => {:in => Shift::STATUSES}
 
+  # will_paginate how many items shown per page
+  self.per_page = 10
+
 end

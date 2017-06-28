@@ -29,7 +29,10 @@ class Shift < ActiveRecord::Base
   validate :check_max_shift_per_day, on: :update, :if => :is_shift_approved?
   validate :check_traited_shift
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
-  
+
+
+  # will_paginate how many items shown per page
+  self.per_page = 10
 
   def check_before_delete_shift?
     if !self.is_shift_pending? && !self.is_shift_outdated?
