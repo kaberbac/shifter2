@@ -3,6 +3,10 @@ Shifter2::Application.routes.draw do
   namespace :admin do
     resources :users do
       resources :user_roles, only: [:create, :index, :destroy]
+      member do
+        put :activate
+        put :inactivate
+      end
     end
     resources :shifts, only: [:index, :destroy] do
       member do

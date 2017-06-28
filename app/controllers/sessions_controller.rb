@@ -6,11 +6,16 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by_email(params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
-      sign_in user
-      if user.has_role_in_roles_list?(Admin::BaseController::ADMINISTRATION_ROLES)
-        redirect_to admin_users_path
+      if user.is_inactive?
+        flash[:error] = 'inactive account, you cant signin'
+        redirect_to signin_path
       else
-        redirect_to user_shifts_path(user)
+        sign_in user
+        if user.has_role_in_roles_list?(Admin::BaseController::ADMINISTRATION_ROLES)
+          redirect_to admin_users_path
+        else
+          redirect_to user_shifts_path(user)
+        end
       end
     else
       flash.now[:error] = 'Invalid email/password combination'

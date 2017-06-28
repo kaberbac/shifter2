@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20170619203749) do
+ActiveRecord::Schema.define(:version => 20170628180447) do
 
   create_table "shift_decisions", :force => true do |t|
     t.integer  "shift_id"
@@ -40,8 +40,9 @@ ActiveRecord::Schema.define(:version => 20170619203749) do
     t.string   "email"
     t.string   "password_digest"
     t.string   "remember_token"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
+    t.string   "state",           :default => "inactive"
   end
 
 end
