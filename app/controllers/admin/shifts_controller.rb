@@ -16,12 +16,12 @@ class Admin::ShiftsController < Admin::BaseController
 
   def index
     @shift = Shift.new
-    @shifts = @shifts.paginate(page: params[:page])
-    @shiftdecisions = ShiftDecision.ordered.paginate(page: params[:page])
+    @shifts = @shifts.paginate(page: params[:shifts_page])
+    @shiftdecisions = ShiftDecision.ordered.paginate(page: params[:shiftdecisions_page])
   end
 
   def history_status
-    @shiftdecisions =  @shift.get_history_status.paginate(page: params[:page])
+    @shiftdecisions =  @shift.get_history_status.paginate(page: params[:shiftdecisions_page])
   end
 
   def destroy

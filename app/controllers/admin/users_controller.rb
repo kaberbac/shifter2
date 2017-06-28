@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::BaseController
   before_filter :set_user, :except=>[:index, :new, :create]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:users_page])
   end
 
   def new
