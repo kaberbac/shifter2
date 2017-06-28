@@ -38,7 +38,10 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def approve
-    change_status('approved')
+    if @shift.check_max_shift_per_day
+      change_status('approved')
+    end
+    flash[:error] = @shift.errors.full_messages.join('. ')
     redirect_to admin_shifts_path
   end
 

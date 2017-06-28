@@ -17,6 +17,8 @@ class Shift < ActiveRecord::Base
   scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
   # return shifts for a given day_work
   scope :shifts_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
+  # return approved shifts for a given day
+  scope :approved_shifts_day_work, lambda {|day_chosen| where(day_work: day_chosen, status: 'approved')}
   scope :with_status, lambda { |status| where(status: status) }
 
   validates :user, presence: true
@@ -24,7 +26,7 @@ class Shift < ActiveRecord::Base
   validates :day_work, :uniqueness => {:scope => :user_id}
   validate :not_past_date
   validate :business_day
-  validate :check_max_shift_per_day
+  # validate :check_max_shift_per_day
   validate :check_traited_shift
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
 
@@ -78,12 +80,12 @@ class Shift < ActiveRecord::Base
   end
 
   def check_max_shift_per_day
-    shifts_to_count = self.class.shifts_day_work(self.day_work) # shifts for a given day_work
-    shifts_to_count = shifts_to_count.where("id != ?", self.id) if self.persisted? # in case of update, we dont count current shift
-
-    if shifts_to_count.count >= MAX_SHIFTS_PER_DAY
-      errors.add(:date, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " shifts per day is allowed")
+    # shifts_to_count = self.class.shifts_day_work(self.day_work) # shifts for a given day_work
+    approved_shifts_to_count = self.class.approved_shifts_day_work(self.day_work) # approved shifts for a given day_work
+    if approved_shifts_to_count.count >= MAX_SHIFTS_PER_DAY
+      errors.add(:date, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " approved shifts per day is allowed")
     end
+    return errors.blank?
   end
 
   def business_day
