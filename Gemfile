@@ -46,3 +46,9 @@ gem 'bcrypt-ruby', '3.0.1'
 
 # To use haml webpages
 gem 'haml'
+
+# pagination
+gem 'will_paginate', '3.0.3'
+
+# Bootstrap’s pagination styles.
+gem 'bootstrap-will_paginate', '0.0.6'

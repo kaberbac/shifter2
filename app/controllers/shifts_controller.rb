@@ -31,7 +31,7 @@ class ShiftsController < ApplicationController
 
   def index
     check_current_user
-    @shifts = current_user.shifts.ordered
+    @shifts = current_user.shifts.ordered.paginate(page: params[:page], per_page: 10)
     @shift = Shift.new
   end
 
@@ -46,7 +46,7 @@ class ShiftsController < ApplicationController
       flash[:success] = "Shift accepted"
       redirect_to user_shifts_path
     else
-      @shifts = current_user.shifts.where('id IS NOT NULL')
+      @shifts = current_user.shifts.where('id IS NOT NULL').paginate(page: params[:page], per_page: 10)
       render 'index'
     end
   end

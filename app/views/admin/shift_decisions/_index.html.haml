@@ -1,4 +1,6 @@
 %h2 History change shift status
+
+= will_paginate collection
 %table.table.table-striped.table-bordered.table-hover
   %tr
     %th Modification date
@@ -14,3 +16,4 @@
         %td= shift_decision.shift.day_work
         %td{:class => "#{shift_decision.decision}"}
           =shift_decision.decision
+= will_paginate collection

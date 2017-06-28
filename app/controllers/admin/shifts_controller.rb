@@ -16,7 +16,8 @@ class Admin::ShiftsController < Admin::BaseController
 
   def index
     @shift = Shift.new
-    @shiftdecisions = ShiftDecision.ordered
+    @shifts = @shifts.paginate(page: params[:page], per_page: 10)
+    @shiftdecisions = ShiftDecision.ordered.paginate(page: params[:page], per_page: 10)
   end
 
   def history_status
@@ -38,10 +39,7 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def approve
-    if @shift.check_max_shift_per_day
-      change_status('approved')
-    end
-    flash[:error] = @shift.errors.full_messages.join('. ')
+    change_status('approved')
     redirect_to admin_shifts_path
   end
 

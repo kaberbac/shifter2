@@ -5,6 +5,7 @@
   = link_to 'Add user', new_admin_user_path
 %br
 
+= will_paginate @users
 %table.table.table-striped.table-bordered.table-hover
   %tr
     %th Name
@@ -27,3 +28,4 @@
         -if current_user.is_admin?
           %td
             = link_to 'manage Roles', admin_user_user_roles_path(user.id)
+= will_paginate @users

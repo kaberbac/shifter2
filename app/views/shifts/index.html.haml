@@ -4,6 +4,7 @@
 
 %h3 There #{is_pluralize(@shifts.length, 'shift')}
 
+= will_paginate @shifts
 %table.table.table-striped.table-bordered.table-hover
   %tr
     %th full name
@@ -17,6 +18,7 @@
         %td{:class => "#{shift.status}"}
           = shift.status
         %td= link_to 'Delete', user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}
+= will_paginate @shifts
 
 %h3 Add shift
 = render 'new'
