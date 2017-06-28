@@ -26,13 +26,10 @@ class Shift < ActiveRecord::Base
   validates :day_work, :uniqueness => {:scope => :user_id}
   validate :not_past_date
   validate :business_day
-  validate :check_max_shift_per_day, on: :update, :if => :condition_testing_approved?
+  validate :check_max_shift_per_day, on: :update, :if => :is_shift_approved?
   validate :check_traited_shift
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
-
-  def condition_testing_approved?
-    return self.status == 'approved'
-  end
+  
 
   def check_before_delete_shift?
     if !self.is_shift_pending? && !self.is_shift_outdated?
