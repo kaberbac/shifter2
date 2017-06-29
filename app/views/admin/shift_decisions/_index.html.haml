@@ -1,13 +1,15 @@
-%h2 History change shift status
+%h2= t(".title")
 
-= will_paginate collection, :param_name => 'shiftdecisions_page'
+= will_paginate collection, :param_name => 'shiftdecisions_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th Modification date
-    %th Shift owner
-    %th Changed by
-    %th Shift date
-    %th Decision
+    %th= t(".modification_date")
+    %th= t(".shift_owner")
+    %th= t(".changed_by")
+    %th= t(".shift_date")
+    %th= t(".decision")
     -collection.each do |shift_decision|
       %tr
         %td= shift_decision.created_at
@@ -16,4 +18,6 @@
         %td= shift_decision.shift.day_work
         %td{:class => "#{shift_decision.decision}"}
           =shift_decision.decision
-= will_paginate collection, :param_name => 'shiftdecisions_page'
+= will_paginate collection, :param_name => 'shiftdecisions_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")

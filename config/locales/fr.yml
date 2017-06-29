@@ -1,0 +1,100 @@
+fr:
+  helpers:
+    submit:
+      submit: 'Soumettre'
+      add_date: "Ajouter la date"
+
+  will_paginate:
+      page_gap: "&hellip;"
+      previous_label: "Précedent"
+      next_label: "Suivant"
+
+  admin:
+    shifts:
+      index:
+        title: "Total de %{number} quart(s) de travail"
+        update: "Mettre à jour"
+        full_name: "Nom complet"
+        day_work: "Jour de travail"
+        status: "Statut"
+        Delete: "Effacer"
+        Approve: "Approuver"
+        Reject: "Rejeter"
+        Put_Pending: "Mettre en attente"
+        History_change: "Historique"
+    shift_decisions:
+      index:
+        title: "Historique des changements du statut des quarts"
+        modification_date: "Date de modification"
+        shift_owner: "Proprio du quart"
+        changed_by: "Changé par"
+        shift_date: "Date du quart"
+        decision: "Décision"
+    users:
+      index:
+        users_index: "Index des utilisateurs"
+        total_users: "Total %{number} utilisateur(s)"
+        add_user: "Ajouter un utilisateur"
+        full_name: "Nom complet"
+        email: "Courriel"
+        role: "Droit d'accés"
+        state: "État"
+        activate: "Activer"
+        inactivate: "Inactiver"
+        delete: "Effacer"
+        edit: "Éditer"
+      new:
+        first_name: "Prénom"
+        last_name: "Nom"
+        email: "Courriel"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+
+  shifts:
+    index:
+      title: "Total de %{number} quart(s) de travail"
+      update: "Mettre à jour"
+      full_name: "Nom complet"
+      day_work: "Jour de travail"
+      status: "Statut"
+      Delete: "Effacer"
+      add_shift: "Ajouter un quart de travail"
+
+  users:
+    show:
+      user_information: "Information de l'utilisateur"
+      full_name: "Nom complet: "
+      email: "Courriel: "
+    passwordchange:
+      old_password: "Ancien mot de passe"
+    edit:
+      edit_profile: "Editer le profile"
+
+  activerecord:
+    models:
+      shift:
+        one: "quart"
+        other: "quarts"
+      user:
+        one: "utilisateur"
+        other: "utilisateurs"
+
+    attributes:
+      shift:
+        day_work: "jour de travail"
+        user_id: "utilisateur_id"
+        status: "statut"
+        created_at: "crée le"
+        updated_at: "mis à jour le"
+      shift/status:
+        "approved": "approuvé"
+      user:
+        first_name: "prénom"
+        last_name: "nom"
+        email: "courriel"
+        password_digest: "mot de passe"
+        password: "mot de passe"
+        created_at: "crée le"
+        updated_at: "mis à jour le"
+        state: "état"
+

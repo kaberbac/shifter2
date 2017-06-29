@@ -1,21 +1,26 @@
-%h2 There #{is_pluralize(Shift.all.length, 'shift')}
+%h2= t(".title", number: Shift.all.length)
 
 = render 'shared/shift_error_messages'
 
-%h3 All Shifts
-= link_to 'Trigger outdater', trigger_outdater_admin_shifts_path, method: :put, class: 'btn btn-danger'
 
-= will_paginate @shifts, :param_name => 'shifts_page'
+= will_paginate @shifts, :param_name => 'shifts_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th full name
-    %th day_work
-    %th status
-    %th Delete
-    %th Approve
-    %th Reject
-    %th Put Pending
-    %th History change
+    %td
+      =link_to trigger_outdater_admin_shifts_path, method: :put, class: 'btn btn-danger' do
+        %span.glyphicon.glyphicon-refresh
+        =t(".update")
+  %tr
+    %th= t(".full_name")
+    %th= t(".day_work")
+    %th= t(".status")
+    %th= t(".Delete")
+    %th= t(".Approve")
+    %th= t(".Reject")
+    %th= t(".Put_Pending")
+    %th= t(".History_change")
     - @shifts.each do |shift|
       %tr
         %td= shift.user.full_name
@@ -42,6 +47,8 @@
           - if shift.shift_decisions.exists?
             = link_to history_status_admin_shift_path(shift.id), class: "btn btn-default", "data-no-turbolink" => true do
               %span.glyphicon.glyphicon-list-alt
-= will_paginate @shifts, :param_name => 'shifts_page'
+= will_paginate @shifts, :param_name => 'shifts_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
 
 = render 'admin/shift_decisions/index', collection: @shiftdecisions

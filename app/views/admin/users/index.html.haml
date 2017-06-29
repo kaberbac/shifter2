@@ -1,23 +1,25 @@
-%h1 Users index
-%h2 There #{is_pluralize(User.all.length, 'user')}
+%h1= t(".users_index")
+%h2= t(".total_users", number: User.all.length)
 
 %h3
   = link_to new_admin_user_path, class: "btn btn-default" do
     %span.glyphicon.glyphicon-plus
-    Add user
+    =t(".add_user")
 %br
 
-= will_paginate @users, :param_name => 'users_page'
+= will_paginate @users, :param_name => 'users_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th Name
-    %th Email
-    %th Role
-    %th State
-    %th Activate
-    %th Inactivate
-    %th Delete
-    %th Edit
+    %th= t(".full_name")
+    %th= t(".email")
+    %th= t(".role")
+    %th= t(".state")
+    %th= t(".activate")
+    %th= t(".inactivate")
+    %th= t(".delete")
+    %th= t(".edit")
     -if current_user.is_admin?
       %th Manage Roles
     - @users.each do |user|
@@ -51,4 +53,6 @@
             = link_to admin_user_user_roles_path(user.id), class: "btn btn-default" do
               %span.glyphicon.glyphicon-wrench
               Roles
-= will_paginate @users, :param_name => 'users_page'
+= will_paginate @users, :param_name => 'users_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")

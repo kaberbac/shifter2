@@ -1,16 +1,17 @@
-%h1 "#{current_user.full_name} shifts"
+%h2= t(".title", number: Shift.all.length)
 
 = render 'shared/shift_error_messages'
 
-%h3 There #{is_pluralize(Shift.all.length, 'shift')}
 
-= will_paginate @shifts, :param_name => 'shifts_page'
+= will_paginate @shifts, :param_name => 'shifts_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th Full name
-    %th Day work
-    %th Status
-    %th Delete
+    %th= t(".full_name")
+    %th= t(".day_work")
+    %th= t(".status")
+    %th= t(".Delete")
     - @shifts.each do |shift|
       %tr
         %td= shift.user.full_name
@@ -21,8 +22,10 @@
           - if shift.is_shift_pending? || shift.is_shift_outdated?
             = link_to user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-danger" do
               %span.glyphicon.glyphicon-trash
-= will_paginate @shifts, :param_name => 'shifts_page'
+= will_paginate @shifts, :param_name => 'shifts_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
 
-%h3 Add shift
+%h3= t(".add_shift")
 = render 'new'
 

@@ -1,6 +1,6 @@
 - provide(:title, 'Edit')
 
-%h1 Edit profile
+%h1= t(".edit_profile")
 
 .row
   .span6.offset3
@@ -13,5 +13,5 @@
       = f.label 'last_name'
       = f.text_field 'last_name'
       %br
-        = f.submit 'Update', :class => 'btn btn-success'
+        = f.submit t("helpers.submit.submit"), :class => 'btn btn-success'
         = link_to 'Cancel', user_shifts_path(@user), :class => 'btn btn-danger'
