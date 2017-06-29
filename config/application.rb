@@ -58,5 +58,11 @@ module Shifter2
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # provide an array of languages that will be available in our app
+    I18n.available_locales = [:en, :fr]
+
+    # default language
+    config.i18n.default_locale = :fr
   end
 end

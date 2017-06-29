@@ -1,0 +1,7 @@
+%li
+  - if I18n.locale == :fr
+    = link_to 'English', change_locale_path(:en)
+
+%li
+  - if I18n.locale == :en
+    = link_to 'Francais', change_locale_path(:fr)

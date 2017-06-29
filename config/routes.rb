@@ -35,6 +35,9 @@ Shifter2::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
   match '/calendar', to: 'shifts#calendar'
 
+  # route for changing the locale
+  get '/change_locale/:locale', to: 'settings#change_locale', as: :change_locale
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

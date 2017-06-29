@@ -52,3 +52,6 @@ gem 'will_paginate', '3.0.3'
 
 # Bootstrap’s pagination styles.
 gem 'bootstrap-will_paginate', '0.0.6'
+
+# for Internationalization
+gem 'rails-i18n', '~> 3.0.0' # for Rails 3
