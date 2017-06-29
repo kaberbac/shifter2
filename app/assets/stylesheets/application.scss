@@ -11,3 +11,12 @@
  *= require_self
  *= require_tree .
  */
+@import "bootstrap";
+
+th {
+  text-align: center !important;
+}
+
+td .btn {
+  display: block !important;
+}

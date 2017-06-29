@@ -39,7 +39,7 @@ gem 'jquery-rails'
 
 
 # bootstrap
-gem 'bootstrap-sass', '2.1'
+gem 'bootstrap-sass', '3.1.1.0'
 
 # encrypte password
 gem 'bcrypt-ruby', '3.0.1'

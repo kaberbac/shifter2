@@ -7,10 +7,10 @@
 = will_paginate @shifts, :param_name => 'shifts_page'
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th full name
-    %th day_work
-    %th status
-    %th
+    %th Full name
+    %th Day work
+    %th Status
+    %th Delete
     - @shifts.each do |shift|
       %tr
         %td= shift.user.full_name
@@ -19,7 +19,8 @@
           = shift.status
         %td
           - if shift.is_shift_pending? || shift.is_shift_outdated?
-            = link_to 'Delete', user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}
+            = link_to user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-danger" do
+              %span.glyphicon.glyphicon-trash
 = will_paginate @shifts, :param_name => 'shifts_page'
 
 %h3 Add shift
