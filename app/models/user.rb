@@ -53,7 +53,6 @@ class User < ActiveRecord::Base
 
   # check if user have role_name
   def has_role?(role_name)
-    raise 'This role doesnt exist' unless (Role::AVAILABLE_ROLES).include?(role_name)
     self.user_roles.where(role_name: role_name).exists?
   end
 

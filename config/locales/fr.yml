@@ -39,7 +39,7 @@ fr:
         email: "Courriel"
         role: "Droit d'accés"
         state: "État"
-        activate: "Activer"
+        (in)activate: "(In)Activer"
         inactivate: "Inactiver"
         delete: "Effacer"
         edit: "Éditer"

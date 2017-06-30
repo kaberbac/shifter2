@@ -13,10 +13,10 @@
  */
 @import "bootstrap";
 
-th {
-  text-align: center !important;
+.table th.center_me, td.center_me {
+  text-align: center;
 }
 
-td .btn {
-  display: block !important;
+.table td.center_me .btn {
+  display: block;
 }

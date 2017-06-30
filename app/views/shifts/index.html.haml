@@ -1,4 +1,4 @@
-%h2= t(".title", number: Shift.all.length)
+%h2= t(".title", number: @shifts.count)
 
 = render 'shared/shift_error_messages'
 
@@ -8,17 +8,17 @@
   :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th= t(".full_name")
-    %th= t(".day_work")
-    %th= t(".status")
-    %th= t(".Delete")
+    %th.center_me= t(".full_name")
+    %th.center_me= t(".day_work")
+    %th.center_me= t(".status")
+    %th.center_me= t(".Delete")
     - @shifts.each do |shift|
       %tr
         %td= shift.user.full_name
         %td= shift.day_work
         %td{:class => "#{shift.status}"}
           = shift.status
-        %td
+        %td.center_me
           - if shift.has_decision?
             = link_to user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-danger" do
               %span.glyphicon.glyphicon-trash

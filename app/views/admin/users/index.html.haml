@@ -1,5 +1,5 @@
 %h1= t(".users_index")
-%h2= t(".total_users", number: User.all.length)
+%h2= t(".total_users", number: User.count)
 
 %h3
   = link_to new_admin_user_path, class: "btn btn-default" do
@@ -12,14 +12,13 @@
   :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th= t(".full_name")
-    %th= t(".email")
-    %th= t(".role")
-    %th= t(".state")
-    %th= t(".activate")
-    %th= t(".inactivate")
-    %th= t(".delete")
-    %th= t(".edit")
+    %th.center_me= t(".full_name")
+    %th.center_me= t(".email")
+    %th.center_me= t(".role")
+    %th.center_me= t(".state")
+    %th.center_me= t(".(in)activate")
+    %th.center_me= t(".delete")
+    %th.center_me= t(".edit")
     -if current_user.is_admin?
       %th Manage Roles
     - @users.each do |user|
@@ -32,24 +31,23 @@
             %li= user_role.role_name
         %td{:class => "#{user.state}"}
           = user.state
-        %td
+        %td.center_me
           - if !user.is_active?
             = link_to activate_admin_user_path(user.id), method: :put, class: "btn btn-success", "data-no-turbolink" => true do
               %span.glyphicon.glyphicon-ok
-        %td
           - if !user.is_inactive?
             = link_to inactivate_admin_user_path(user.id), method: :put, class: "btn btn-danger", "data-no-turbolink" => true do
               %span.glyphicon.glyphicon-remove
-        %td
+        %td.center_me
           = link_to admin_user_path(user.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-default" do
             %span.glyphicon.glyphicon-trash
-        %td
+        %td.center_me
           = link_to edit_admin_user_path(user.id), class: "btn btn-default" do
             %span.glyphicon.glyphicon-edit
             Edit
 
         -if current_user.is_admin?
-          %td
+          %td.center_me
             = link_to admin_user_user_roles_path(user.id), class: "btn btn-default" do
               %span.glyphicon.glyphicon-wrench
               Roles
