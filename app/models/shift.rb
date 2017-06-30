@@ -1,19 +1,21 @@
 class Shift < ActiveRecord::Base
+
+  # will_paginate how many items shown per page
+  self.per_page = 10
+
   attr_accessible :day_work, :user_id, :status
+
+  # constants
   MAX_SHIFTS_PER_DAY = 2
+  STATUSES = %w(pending approved rejected outdated)
+
+  # relations
   belongs_to :user
   has_many :shift_decisions, dependent: :destroy
 
-  STATUSES = %w(pending approved rejected outdated)
-
-  before_destroy :check_before_delete_shift?
-
-  before_validation(on: :create) do
-    self.status ||= 'pending'
-  end
-
-  # scope :method_name, lambda { |variable| where(some_attribute: variable) }
+  # scopes
   scope :ordered, order('day_work desc')
+  # scope :method_name, lambda { |variable| where(some_attribute: variable) }
   scope :day_work_between, lambda { |start_date, end_date| where(day_work: start_date..end_date) }
   # return shifts for a given day_work
   scope :shifts_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
@@ -21,6 +23,7 @@ class Shift < ActiveRecord::Base
   scope :approved_shifts_day_work, lambda {|day_chosen| where(day_work: day_chosen, status: 'approved')}
   scope :with_status, lambda { |status| where(status: status) }
 
+  # validations
   validates :user, presence: true
   validates :day_work, presence: true
   validates :day_work, :uniqueness => {:scope => :user_id}
@@ -30,9 +33,12 @@ class Shift < ActiveRecord::Base
   validate :check_traited_shift
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
 
+  # callbacks
+  before_destroy :check_before_delete_shift?
+  before_validation(on: :create) do
+    self.status ||= 'pending'
+  end
 
-  # will_paginate how many items shown per page
-  self.per_page = 10
 
   def check_before_delete_shift?
     if !self.is_shift_pending? && !self.is_shift_outdated?

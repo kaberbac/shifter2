@@ -1,21 +1,22 @@
 class User < ActiveRecord::Base
+
+  # will_paginate how many items shown per page
+  self.per_page = 10
+
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :old_password, :state
   has_secure_password
 
+  # constants
+  STATES = %w(inactive active)
+
+  # relations
   has_many :shifts, dependent: :restrict
   has_many :shift_decisions, dependent: :restrict
   has_many :user_roles, dependent: :destroy
 
-  STATES = %w(inactive active)
+  # scopes
 
-  before_save { |user| user.email = email.downcase }
-  before_save :create_remember_token
-
-  before_validation(on: :create) do
-    self.state ||= 'inactive'
-  end
-
-
+  # validations
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :first_name, presence: true, length: {in: 2..50}
   validates :last_name, presence: true, length: {minimum: 2, maximum: 50}
@@ -23,8 +24,12 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: { minimum: 6 }, unless: lambda { self.persisted? && self.password.nil? }
   validates :state, presence: true, :inclusion=> { :in => STATES }
 
-  # will_paginate how many items shown per page
-  self.per_page = 10
+  # callbacks
+  before_save { |user| user.email = email.downcase }
+  before_save :create_remember_token
+  before_validation(on: :create) do
+    self.state ||= 'inactive'
+  end
 
   def full_name
     first_name.capitalize + ' ' + last_name.upcase

@@ -3,7 +3,15 @@
 # define static data: list of available roles for users
 
 class Role
+
+  # constants
   AVAILABLE_ROLES = %w( admin manager )
+
+  # relations
+  # scopes
+  # validations
+  # callbacks
+
 
   def self.get_admin!
     self.get_some_role!('admin')
