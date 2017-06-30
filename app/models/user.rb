@@ -53,6 +53,15 @@ class User < ActiveRecord::Base
 
   # check if user have role_name
   def has_role?(role_name)
+    roles_name = Array.wrap(role_name)
+    puts "-------------------------------"
+    puts roles_name
+    puts "-------------------------------"
+    role_unknown = roles_name - Role::AVAILABLE_ROLES
+    if role_unknown.any?
+     raise "#{role_unknown} role doesnt exist"
+    end
+
     self.user_roles.where(role_name: role_name).exists?
   end
 
