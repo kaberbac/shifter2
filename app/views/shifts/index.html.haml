@@ -19,7 +19,7 @@
         %td{:class => "#{shift.status}"}
           = shift.status
         %td
-          - if shift.is_shift_pending? || shift.is_shift_outdated?
+          - if shift.has_decision?
             = link_to user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-danger" do
               %span.glyphicon.glyphicon-trash
 = will_paginate @shifts, :param_name => 'shifts_page',
