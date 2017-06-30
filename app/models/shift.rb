@@ -34,13 +34,13 @@ class Shift < ActiveRecord::Base
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
 
   # callbacks
-  before_destroy :check_before_delete_shift?
+  before_destroy :deletable?
   before_validation(on: :create) do
     self.status ||= 'pending'
   end
 
 
-  def check_before_delete_shift?
+  def deletable?
     if self.has_decision?
       self.errors[:base] = 'You can delete only pending/outdated shifts'
       return false
