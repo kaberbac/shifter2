@@ -13,9 +13,9 @@
         %span.glyphicon.glyphicon-refresh
         =t(".update")
   %tr
-    %th.center_me= t(".full_name")
-    %th.center_me= t(".day_work")
-    %th.center_me= t(".status")
+    %th.center_me= User.human_attribute_name(:full_name)
+    %th.center_me= Shift.human_attribute_name(:day_work)
+    %th.center_me= Shift.human_attribute_name(:status)
     %th.center_me= t(".Delete")
     %th.center_me= t(".Approve")
     %th.center_me= t(".Reject")
@@ -23,7 +23,7 @@
     %th.center_me= t(".History_change")
     - @shifts.each do |shift|
       %tr
-        %td= shift.user.full_name
+        %td= shift.user.try(:full_name) || "User was deleted"
         %td= shift.day_work
         %td{:class => "#{shift.status}"}
           = shift.status

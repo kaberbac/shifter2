@@ -12,10 +12,10 @@
   :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th.center_me= t(".full_name")
-    %th.center_me= t(".email")
-    %th.center_me= t(".role")
-    %th.center_me= t(".state")
+    %th.center_me= User.human_attribute_name(:full_name)
+    %th.center_me= User.human_attribute_name(:email)
+    %th.center_me= User.human_attribute_name(:role)
+    %th.center_me= User.human_attribute_name(:state)
     %th.center_me= t(".(in)activate")
     %th.center_me= t(".delete")
     %th.center_me= t(".edit")

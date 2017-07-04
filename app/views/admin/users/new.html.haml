@@ -7,20 +7,20 @@
 
     =form_for [:admin, @user] do |f|
       = render 'shared/user_error_messages'
-      %p= t(".first_name")
+      = f.label :first_name
       = f.text_field 'first_name'
       %br
-      %p= t(".last_name")
+      = f.label :last_name
       = f.text_field 'last_name'
       %br
-      %p= t(".email")
+      = f.label :email
       = f.text_field 'email'
       %br
-      %p= t(".password")
+      = f.label :password
       = f.password_field 'password'
       %br
-      %p= t(".password_confirmation")
+      = f.label :password_confirmation
       = f.password_field 'password_confirmation'
       %br
-      = f.submit t("helpers.submit.submit"), :class => 'btn btn-success'
-      = link_to 'Cancel', admin_users_path, :class => 'btn btn-danger'
+      = f.submit t("helpers.submit"), :class => 'btn btn-success'
+      = link_to t("helpers.cancel"), admin_users_path, :class => 'btn btn-danger'

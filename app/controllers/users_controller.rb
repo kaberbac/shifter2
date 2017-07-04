@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :sign_in_if_not_logged, :only => [:new, :create, :update]
+  skip_before_filter :sign_in_if_not_logged, :only => [:new, :create, :update, :change_locale]
 
   def change_locale
     locale = params[:locale].to_s.strip.to_sym

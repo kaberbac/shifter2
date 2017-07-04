@@ -22,4 +22,5 @@
       = f.label 'password_confirmation', "Confirmation"
       = f.password_field 'password_confirmation'
       %br
-      = f.submit 'Signup'
+      = f.submit t("helpers.submit"), :class => 'btn btn-success'
+      = link_to t("helpers.cancel"), signin_path(), :class => 'btn btn-danger'

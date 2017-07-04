@@ -3,8 +3,9 @@
 %b Id:
 = @user.id
 %br
-%b= t(".full_name")
+%b= User.human_attribute_name(:full_name)
 = @user.full_name
 %br
-%b= t(".email")
+%b= User.human_attribute_name(:email)
+%b :
 = @user.email

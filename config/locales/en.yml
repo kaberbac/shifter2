@@ -4,9 +4,9 @@
 en:
 
   helpers:
-    submit:
-      submit: 'Submit'
-      add_date: "Add date"
+    submit: 'Submit'
+    cancel: "Cancel"
+    add_date: "Add date"
 
   admin:
     shifts:
@@ -22,10 +22,5 @@ en:
   shifts:
     index:
       title: "Total %{number} shift(s)"
-
-  users:
-    show:
-      full_name: "Full Name: "
-      email: "Email: "
 
 

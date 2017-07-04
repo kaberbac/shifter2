@@ -1,8 +1,8 @@
 fr:
   helpers:
-    submit:
-      submit: 'Soumettre'
-      add_date: "Ajouter la date"
+    submit: 'Soumettre'
+    cancel: "Annuler"
+    add_date: "Ajouter la date"
 
   will_paginate:
       page_gap: "&hellip;"
@@ -14,9 +14,6 @@ fr:
       index:
         title: "Total de %{number} quart(s) de travail"
         update: "Mettre à jour"
-        full_name: "Nom complet"
-        day_work: "Jour de travail"
-        status: "Statut"
         Delete: "Effacer"
         Approve: "Approuver"
         Reject: "Rejeter"
@@ -35,37 +32,28 @@ fr:
         users_index: "Index des utilisateurs"
         total_users: "Total %{number} utilisateur(s)"
         add_user: "Ajouter un utilisateur"
-        full_name: "Nom complet"
-        email: "Courriel"
-        role: "Droit d'accés"
-        state: "État"
         (in)activate: "(In)Activer"
-        inactivate: "Inactiver"
         delete: "Effacer"
         edit: "Éditer"
-      new:
-        first_name: "Prénom"
-        last_name: "Nom"
-        email: "Courriel"
-        password: "Mot de passe"
-        password_confirmation: "Confirmation du mot de passe"
 
   shifts:
     index:
       title: "Total de %{number} quart(s) de travail"
       update: "Mettre à jour"
-      full_name: "Nom complet"
-      day_work: "Jour de travail"
-      status: "Statut"
       Delete: "Effacer"
       add_shift: "Ajouter un quart de travail"
 
+  sessions:
+    new:
+      sign_in: "Se connecter"
+      remember_me_on_this_computer: "Se rappeler de moi"
+      not_registred_yet?: "Pas encore enregistré?"
+      sign_up_now: "S'enregistrer maintenant"
   users:
     show:
       user_information: "Information de l'utilisateur"
-      full_name: "Nom complet: "
-      email: "Courriel: "
     passwordchange:
+      change_password: "Changer le mot de passe"
       old_password: "Ancien mot de passe"
     edit:
       edit_profile: "Editer le profile"
@@ -81,20 +69,22 @@ fr:
 
     attributes:
       shift:
-        day_work: "jour de travail"
-        user_id: "utilisateur_id"
-        status: "statut"
-        created_at: "crée le"
-        updated_at: "mis à jour le"
+        day_work: "Jour de travail"
+        user_id: "Utilisateur_id"
+        status: "Statut"
+        created_at: "Crée le"
+        updated_at: "Mis à jour le"
       shift/status:
         "approved": "approuvé"
       user:
-        first_name: "prénom"
-        last_name: "nom"
-        email: "courriel"
-        password_digest: "mot de passe"
-        password: "mot de passe"
-        created_at: "crée le"
-        updated_at: "mis à jour le"
-        state: "état"
+        first_name: "Prénom"
+        last_name: "Nom"
+        full_name: "Nom complet"
+        email: "Courriel"
+        password_digest: "Mot de passe"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation mot de passe"
+        created_at: "Crée le"
+        updated_at: "Mis à jour le"
+        state: "État"
 

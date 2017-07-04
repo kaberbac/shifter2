@@ -8,9 +8,9 @@
   :next_label     => t("will_paginate.next_label")
 %table.table.table-striped.table-bordered.table-hover
   %tr
-    %th.center_me= t(".full_name")
-    %th.center_me= t(".day_work")
-    %th.center_me= t(".status")
+    %th.center_me= User.human_attribute_name(:full_name)
+    %th.center_me= Shift.human_attribute_name(:day_work)
+    %th.center_me= Shift.human_attribute_name(:status)
     %th.center_me= t(".Delete")
     - @shifts.each do |shift|
       %tr

@@ -13,5 +13,5 @@
       = f.label 'last_name'
       = f.text_field 'last_name'
       %br
-        = f.submit t("helpers.submit.submit"), :class => 'btn btn-success'
-        = link_to 'Cancel', user_shifts_path(@user), :class => 'btn btn-danger'
+        = f.submit t("helpers.submit"), :class => 'btn btn-success'
+        = link_to t("helpers.cancel"), user_shifts_path(@user), :class => 'btn btn-danger'
