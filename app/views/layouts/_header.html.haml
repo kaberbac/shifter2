@@ -8,7 +8,7 @@
             - if signed_in?
               %li#fat-menu.dropdown
                 %a.dropdown-toggle{"data-toggle" => "dropdown"}
-                  = "#{current_user.full_name} #{current_user.get_roles}"
+                  = "#{current_user.full_name} #{current_user.user_roles.pluck(:role_name)}"
               - if current_user.has_role?(Role.get_admin!) || current_user.has_role?(Role.get_manager!)
                 %li#fat-menu.dropdown
                   %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}

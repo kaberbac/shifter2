@@ -32,11 +32,11 @@
             = link_to admin_shift_path(shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-default" do
               %span.glyphicon.glyphicon-trash
         %td.center_me
-          - if shift.is_pending_present?
+          - if shift.can_be_traited?
             = link_to approve_admin_shift_path(shift.id), method: :put, class: "btn btn-success", "data-no-turbolink" => true do
               %span.glyphicon.glyphicon-ok
         %td.center_me
-          - if shift.is_pending_present?
+          - if shift.can_be_traited?
             = link_to reject_admin_shift_path(shift.id), method: :put, class: "btn btn-danger", "data-no-turbolink" => true do
               %span.glyphicon.glyphicon-remove
         %td.center_me

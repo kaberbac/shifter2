@@ -67,12 +67,6 @@ class User < ActiveRecord::Base
     has_role?(role_name_list)
   end
 
-  def get_roles
-    # self.user_roles.map{|role| role[:role_name]} is the same as : self.user_roles.pluck(:role_name)
-    self.user_roles.pluck(:role_name)
-  end
-
-
   private
 
   def create_remember_token

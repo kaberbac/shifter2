@@ -47,7 +47,7 @@ class Shift < ActiveRecord::Base
     end
   end
 
-  def is_pending_present?
+  def can_be_traited?
     self.is_shift_pending? && !self.day_work.past?
   end
 
