@@ -7,6 +7,7 @@ class Shift < ActiveRecord::Base
 
   # constants
   MAX_SHIFTS_PER_DAY = 2
+  MAX_USER_SHIFTS_PER_WEEK = 3
   STATUSES = %w(pending approved rejected outdated)
 
   # relations
@@ -21,6 +22,9 @@ class Shift < ActiveRecord::Base
   scope :shifts_day_work, lambda { |day_chosen| where(day_work: day_chosen)}
   # return approved shifts for a given day
   scope :approved_shifts_day_work, lambda {|day_chosen| where(day_work: day_chosen, status: 'approved')}
+
+  # return approved user shifts for the week that includes a given day
+  scope :approved_user_shifts_week, lambda {|u_id, day_chosen| where("user_id = ? AND status = 'approved' AND day_work >= ? AND day_work <= ?", u_id, day_chosen.to_date.beginning_of_week(:sunday), day_chosen.to_date.beginning_of_week(:sunday) + 7)}
   scope :with_status, lambda { |status| where(status: status) }
 
   # validations
@@ -30,6 +34,7 @@ class Shift < ActiveRecord::Base
   validate :not_past_date
   validate :business_day
   validate :check_max_shift_per_day, on: :update, :if => :is_shift_approved?
+  validate :check_max_user_shifts_per_week, on: :update, :if => :is_shift_approved?
   validate :check_traited_shift
   validates :status, presence: true, :inclusion=> { :in => STATUSES }
 
@@ -100,6 +105,15 @@ class Shift < ActiveRecord::Base
       errors.add(:date, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " approved shifts per day is allowed")
     end
     return errors.blank?
+  end
+
+  def check_max_user_shifts_per_week
+    # raise self.class.week_days_for_given_day(self.day_work).inspect
+     approved_user_shifts_to_count = self.class.approved_user_shifts_week(self.user.id, self.day_work) # approved user shifts in a week that include day_work
+     if approved_user_shifts_to_count.count >= MAX_USER_SHIFTS_PER_WEEK
+       errors.add(:date, "Maximum " + MAX_USER_SHIFTS_PER_WEEK.to_s + " approved shifts per week per user is allowed")
+     end
+     return errors.blank?
   end
 
   def business_day
