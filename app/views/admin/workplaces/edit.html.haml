@@ -1,0 +1,15 @@
+%h1 Edit workplace
+
+.row
+  .span6.offset3
+
+    =form_for [:admin,@workplace] do |workplace|
+      = render 'shared/workplace_error_messages'
+      = workplace.label 'name'
+      = workplace.text_field 'name'
+      %br
+      = workplace.label 'address'
+      = workplace.text_field 'address'
+      %br
+        = workplace.submit t("helpers.submit"), :class => 'btn btn-success'
+        = link_to t("helpers.cancel"), admin_workplaces_path, :class => 'btn btn-danger'

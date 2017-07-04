@@ -1,0 +1,36 @@
+%h1= t(".workplaces_index")
+%h2= t(".total_workplaces", number: Workplace.count)
+
+%h3
+  = link_to new_admin_workplace_path, class: "btn btn-default" do
+    %span.glyphicon.glyphicon-plus
+    =t(".add_workplace")
+%br
+
+= will_paginate @workplaces, :param_name => 'workplaces_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
+%table.table.table-striped.table-bordered.table-hover
+  %tr
+    %th.center_me= Workplace.human_attribute_name(:name)
+    %th.center_me= Workplace.human_attribute_name(:address)
+    -#%th.center_me= User.human_attribute_name(:role)
+    %th.center_me= t(".delete")
+    %th.center_me= t(".edit")
+    %th Manage workplaces
+    - @workplaces.each do |workplace|
+      %tr
+        %td= workplace.name
+        %td= workplace.address
+
+        %td.center_me
+          = link_to admin_workplace_path(workplace.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-default" do
+            %span.glyphicon.glyphicon-trash
+        %td.center_me
+          = link_to edit_admin_workplace_path(workplace.id), class: "btn btn-default" do
+            %span.glyphicon.glyphicon-edit
+            Edit
+
+= will_paginate @users, :param_name => 'users_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")

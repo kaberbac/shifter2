@@ -19,6 +19,8 @@ Shifter2::Application.routes.draw do
         put :trigger_outdater
       end
     end
+
+    resources :workplaces, except: :show
   end
 
   resources :users, except: [:index, :destroy] do
