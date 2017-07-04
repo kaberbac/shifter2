@@ -36,7 +36,7 @@ Shifter2::Application.routes.draw do
   match '/calendar', to: 'shifts#calendar'
 
   # route for changing the locale
-  get '/change_locale/:locale', to: 'settings#change_locale', as: :change_locale
+  get '/change_locale/:locale', to: 'users#change_locale', as: :change_locale
 
 
   # The priority is based upon order of creation:

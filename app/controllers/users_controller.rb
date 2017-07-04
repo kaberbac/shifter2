@@ -1,6 +1,13 @@
 class UsersController < ApplicationController
   skip_before_filter :sign_in_if_not_logged, :only => [:new, :create, :update]
 
+  def change_locale
+    locale = params[:locale].to_s.strip.to_sym
+    locale = I18n.default_locale unless I18n.available_locales.include?(locale)
+    cookies.permanent[:my_locale] = locale
+    redirect_to request.referer || root_path
+  end
+
   def new
     @user = User.new
   end
