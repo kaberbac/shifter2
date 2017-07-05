@@ -2,7 +2,11 @@ Shifter2::Application.routes.draw do
 
   namespace :admin do
     resources :users do
-      resources :user_roles, only: [:create, :index, :destroy]
+      resources :user_roles, only: [:create, :index, :destroy, :update_workplace] do
+        member do
+          put :update_workplace
+        end
+      end
       member do
         put :activate
         put :inactivate

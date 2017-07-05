@@ -24,4 +24,20 @@
         %strong Info!
         No more roles available to add
 %hr
+%h2 Workplace shift managed
+
+= form_for [:admin, @user_role], :url => update_workplace_admin_user_user_role_path(:user_id, :id) do |userrole|
+  %ul
+    - userrole.where('workplace_id IS NOT NULL').each do |user_role|
+      %li
+        = user_role.workplace_id
+  %hr
+  - if @workplaces.present?
+    = userrole.select(:workplace_id, Workplace.all.collect {|w| [ w.name, w.id ] })
+    %br
+      = user.submit t("helpers.submit"), :class => 'btn btn-success'
+      = link_to t("helpers.cancel"), [:admin, Shift], :class => 'btn btn-danger'
+
+
+%hr
 = link_to 'Return to User List', [:admin, User]

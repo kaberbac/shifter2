@@ -2,6 +2,10 @@ class Admin::UserRolesController < Admin::BaseController
 
   before_filter :set_user, :require_admin
 
+  def update_workplace
+
+  end
+
   def create
     selected_role = params[:user_role][:role_name]
 
@@ -17,6 +21,9 @@ class Admin::UserRolesController < Admin::BaseController
 
   def index
     @roles = Role.all - @user.user_roles.map{|u| u[:role_name]}
+    @workplaces = Workplace.all
+    @user_role = @user.user_roles.find_by_role_name('manager')
+
   end
 
   def destroy

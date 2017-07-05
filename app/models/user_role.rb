@@ -1,10 +1,11 @@
 class UserRole < ActiveRecord::Base
-  attr_accessible :role_name, :user_id
+  attr_accessible :role_name, :user_id, :workplace_id
 
   # constants
 
   # relations
   belongs_to :user
+  belongs_to :workplace
 
   # scopes
 
