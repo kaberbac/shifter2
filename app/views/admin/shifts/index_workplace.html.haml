@@ -1,0 +1,18 @@
+%h2 Shift workplace
+= form_for [:admin, @shift], :url => update_workplace_admin_shift_path do |shift|
+  %b= Shift.human_attribute_name(:day_work)
+  %b :
+  = shift.object.try(:day_work)
+  %br
+  %b= User.human_attribute_name(:full_name)
+  %b :
+  = shift.object.user.try(:full_name)
+  %br
+  %b= 'Current workplace :'
+  = shift.object.workplace.try(:name) || "No workplace"
+  %hr
+  - if @workplaces.present?
+    = shift.select(:workplace_id, Workplace.all.collect {|w| [ w.name, w.id ] })
+    %br
+      = shift.submit t("helpers.submit"), :class => 'btn btn-success'
+      = link_to t("helpers.cancel"), [:admin, Shift], :class => 'btn btn-danger'

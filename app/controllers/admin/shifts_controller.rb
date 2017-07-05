@@ -1,8 +1,26 @@
 class Admin::ShiftsController < Admin::BaseController
 
-  before_filter :set_shift, :only => [:destroy, :approve, :reject, :become_pending, :history_status]
+  before_filter :set_shift, :except => [:trigger_outdater, :index]
   before_filter :set_shifts, :only => [:index, :destroy, :approve, :reject, :become_pending]
   before_filter :check_can_change_status, :only => [:approve, :reject]
+
+  def update_workplace
+    if current_user.is_admin?
+      if @shift.update_attributes(workplace_id: params[:shift][:workplace_id])
+        flash[:success] = 'Shift workplace updated successfully'
+      else
+        flash[:error] = 'failed to update shift workplace' + '---' + @shift.errors.full_messages.join('. ')
+      end
+    else
+      flash[:error] = 'Only admin can change shift workplace'
+    end
+    redirect_to admin_shifts_path
+  end
+
+  def index_workplace
+    @workplaces = Workplace.all
+  end
+
 
   def trigger_outdater
     if ShiftOutdater.execute

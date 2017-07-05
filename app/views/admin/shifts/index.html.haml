@@ -16,6 +16,7 @@
     %th.center_me= User.human_attribute_name(:full_name)
     %th.center_me= Shift.human_attribute_name(:day_work)
     %th.center_me= Shift.human_attribute_name(:status)
+    %th.center_me= "Workplace"
     %th.center_me= t(".Delete")
     %th.center_me= t(".Approve")
     %th.center_me= t(".Reject")
@@ -27,6 +28,11 @@
         %td= shift.day_work
         %td{:class => "#{shift.status}"}
           = shift.status
+        %td
+          - if current_user.is_admin?
+            = link_to shift.workplace.try(:name) || "No workplace", index_workplace_admin_shift_path(shift.id)
+          - else
+            = shift.workplace.try(:name) || "No workplace"
         %td.center_me
           - if !shift.has_decision?
             = link_to admin_shift_path(shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-default" do

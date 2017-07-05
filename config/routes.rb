@@ -8,12 +8,14 @@ Shifter2::Application.routes.draw do
         put :inactivate
       end
     end
-    resources :shifts, only: [:index, :destroy] do
+    resources :shifts, only: [:index, :destroy, :update_workplace] do
       member do
         put :approve
         put :reject
         put :become_pending
+        put :update_workplace
         get :history_status
+        get :index_workplace
       end
       collection do
         put :trigger_outdater

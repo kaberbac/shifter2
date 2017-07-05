@@ -17,7 +17,7 @@ fr:
         Delete: "Effacer"
         Approve: "Approuver"
         Reject: "Rejeter"
-        Put_Pending: "Mettre en attente"
+        Put_Pending: "En attente"
         History_change: "Historique"
     shift_decisions:
       index:

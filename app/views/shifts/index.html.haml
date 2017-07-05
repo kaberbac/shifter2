@@ -11,6 +11,7 @@
     %th.center_me= User.human_attribute_name(:full_name)
     %th.center_me= Shift.human_attribute_name(:day_work)
     %th.center_me= Shift.human_attribute_name(:status)
+    %th.center_me= "Workplace"
     %th.center_me= t(".Delete")
     - @shifts.each do |shift|
       %tr
@@ -18,6 +19,7 @@
         %td= shift.day_work
         %td{:class => "#{shift.status}"}
           = shift.status
+        %td= shift.workplace.try(:name) || "No workplace"
         %td.center_me
           - if !shift.has_decision?
             = link_to user_shift_path(shift.user_id, shift.id), method: :delete, data: {confirm: 'Are you sure to delete?'}, class: "btn btn-danger" do
