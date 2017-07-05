@@ -23,4 +23,22 @@ class UserRole < ActiveRecord::Base
     end
     errors.blank? #return false, to not destroy the element
   end
+
+
+  def self.count_admin_active?
+    counter = 0
+    my_user_role = UserRole.where(role_name: Role.get_admin!)
+    my_user_role.pluck(:user_id).each do |userid|
+      if User.find(userid).state == 'active'
+        counter +=1
+      end
+    end
+    return counter
+  end
+
+  def self.any_admin_active?
+    self.count_admin_active? > 0
+  end
+
+
 end

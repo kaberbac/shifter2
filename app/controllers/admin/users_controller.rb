@@ -6,7 +6,12 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def inactivate
-    change_state('inactive')
+    if @user.is_last_active_admin?
+      change_state('inactive')
+    else
+      flash[:error] = @user.errors.full_messages.join('. ')
+      redirect_to admin_users_path
+    end
   end
 
   def index

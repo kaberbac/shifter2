@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: { case_sensitive: false }, format: { with: VALID_EMAIL_REGEX }
   validates :password, presence: true, length: { minimum: 6 }, unless: lambda { self.persisted? && self.password.nil? }
   validates :state, presence: true, :inclusion=> { :in => STATES }
+  validate :is_last_active_admin?, on: :inactivate
 
   # callbacks
   before_save { |user| user.email = email.downcase }
@@ -65,6 +66,13 @@ class User < ActiveRecord::Base
   # check if user have role_name in a list of role_names
   def has_role_in_roles_list?(role_name_list)
     has_role?(role_name_list)
+  end
+
+  def is_last_active_admin?
+    if UserRole.count_admin_active? == 1 && self.is_admin? && self.state == 'active'
+      errors.add(:base, 'You cant inactivate the last active admin user.')
+    end
+    errors.blank? #return false, to not inactivate the element
   end
 
   private
