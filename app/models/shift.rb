@@ -3,7 +3,7 @@ class Shift < ActiveRecord::Base
   # will_paginate how many items shown per page
   self.per_page = 10
 
-  attr_accessible :day_work, :user_id, :status
+  attr_accessible :day_work, :user_id, :status, :workplace_id
 
   # constants
   MAX_SHIFTS_PER_DAY = 2
@@ -12,6 +12,7 @@ class Shift < ActiveRecord::Base
 
   # relations
   belongs_to :user
+  belongs_to :workplace
   has_many :shift_decisions, dependent: :destroy
 
   # scopes
@@ -93,16 +94,16 @@ class Shift < ActiveRecord::Base
     if self.status_was == 'pending' && self.is_shift_outdated? && self.day_work.past? && self.persisted?
       return true
     end
-    if self.day_work.past?
-      errors.add(:date, 'date should be in future')
+    if self.day_work.past? && !self.workplace_id_changed?
+      errors.add(:base, 'date should be in future')
     end
   end
 
   def check_max_shift_per_day
     # shifts_to_count = self.class.shifts_day_work(self.day_work) # shifts for a given day_work
     approved_shifts_to_count = self.class.approved_shifts_day_work(self.day_work) # approved shifts for a given day_work
-    if approved_shifts_to_count.count >= MAX_SHIFTS_PER_DAY
-      errors.add(:date, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " approved shifts per day is allowed")
+    if approved_shifts_to_count.count >= MAX_SHIFTS_PER_DAY && !self.workplace_id_changed?
+      errors.add(:base, "Maximum " + MAX_SHIFTS_PER_DAY.to_s + " approved shifts per day is allowed")
     end
     return errors.blank?
   end
@@ -110,8 +111,8 @@ class Shift < ActiveRecord::Base
   def check_max_user_shifts_per_week
     # raise self.class.week_days_for_given_day(self.day_work).inspect
      approved_user_shifts_to_count = self.class.approved_user_shifts_week(self.user.id, self.day_work) # approved user shifts in a week that include day_work
-     if approved_user_shifts_to_count.count >= MAX_USER_SHIFTS_PER_WEEK
-       errors.add(:date, "Maximum " + MAX_USER_SHIFTS_PER_WEEK.to_s + " approved shifts per week per user is allowed")
+     if approved_user_shifts_to_count.count >= MAX_USER_SHIFTS_PER_WEEK && !self.workplace_id_changed?
+       errors.add(:base, "Maximum " + MAX_USER_SHIFTS_PER_WEEK.to_s + " approved shifts per week per user is allowed")
      end
      return errors.blank?
   end

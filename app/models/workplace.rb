@@ -8,7 +8,10 @@ class Workplace < ActiveRecord::Base
   # constants
 
   # relations
+  has_many :shifts, dependent: :restrict
   # scopes
   # validations
+  validates :name, presence: true, uniqueness: true
+  validates :address, presence: true
   # callbacks
 end

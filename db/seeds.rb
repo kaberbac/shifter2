@@ -2,6 +2,25 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 
+unless Workplace.find_by_name('no_workplace').present?
+  Workplace.create!(name: 'no_workplace', address: 'unknown')
+  puts "-----------------------------------------"
+  puts "no_workplace workplace has been created. "
+  puts "-----------------------------------------"
+end
+
+if Workplace.find_by_name('no_workplace').present?
+  Shift.all.each do |shift|
+    if shift.workplace_id.nil?
+      shift.update_attributes(workplace_id: Workplace.find_by_name('no_workplace').id)
+      puts "------------------------------------------------------------------"
+      puts "shift with id=#{shift.id} workplace has been set to no_workplace. "
+      puts "------------------------------------------------------------------"
+    end
+  end
+end
+
+
 
 unless UserRole.any_admin_active?
 
