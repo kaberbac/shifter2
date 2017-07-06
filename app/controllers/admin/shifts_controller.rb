@@ -1,8 +1,9 @@
 class Admin::ShiftsController < Admin::BaseController
 
   before_filter :set_shift, :except => [:trigger_outdater, :index]
-  before_filter :set_shifts, :only => [:index, :destroy, :approve, :reject, :become_pending]
-  before_filter :check_can_change_status, :only => [:approve, :reject]
+  before_filter :set_shifts, :only => [:index, :destroy, :approve, :reject, :become_pendingm, :check_workplace_manager]
+  before_filter :check_can_change_status, only: [:approve, :reject]
+  before_filter :check_workplace_manager, :only => [:destroy, :approve, :reject, :become_pendingm]
 
   def update_workplace
     if current_user.is_admin?
@@ -83,7 +84,12 @@ class Admin::ShiftsController < Admin::BaseController
   end
 
   def set_shifts
-    @shifts = Shift.ordered
+    if current_user.is_manager?
+      workplace_list = current_user.workplaces.pluck(:workplace_id)
+      @shifts = Shift.where("workplace_id IN (?)", workplace_list).ordered
+    elsif current_user.is_admin?
+      @shifts = Shift.ordered
+    end
   end
 
   def check_can_change_status
@@ -100,6 +106,17 @@ class Admin::ShiftsController < Admin::BaseController
       ShiftDecision.create!(shift_id: @shift.id, user_id: current_user.id, decision: decision)
     else
       flash[:error] = @shift.errors.full_messages.join('. ')
+    end
+  end
+
+  def check_workplace_manager
+    if current_user.is_manager?
+      workplace_list = current_user.workplaces.pluck(:workplace_id)
+      unless workplace_list.include?(@shift.workplace_id)
+        flash[:error] = 'You are not allowed to manage other workplaces'
+        redirect_to admin_shifts_path
+        return false
+      end
     end
   end
 
