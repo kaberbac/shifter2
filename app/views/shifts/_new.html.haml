@@ -1,5 +1,8 @@
 = form_for [current_user, @shift] do |f|
   = f.label 'day_work'
   = f.date_select 'day_work'
+  = f.label 'workplace'
+  = f.select(:workplace_id, Workplace.all.collect {|w| [ w.name, w.id ] })
   %br
-  = f.submit t("helpers.add_date"), class: "btn btn-success"
+  = f.submit t("helpers.add_date"), class: 'btn btn-success'
+  = link_to t("helpers.cancel"), [:admin, User], :class => 'btn btn-danger'
