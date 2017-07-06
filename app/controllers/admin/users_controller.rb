@@ -2,9 +2,19 @@ class Admin::UsersController < Admin::BaseController
   before_filter :set_user, :except=>[:index, :new, :create]
 
   def request_shift
-    
+    @shift_request = @user.shift_requests.new()
   end
 
+  def update_shift_request
+    @shift_request = @user.shift_requests.new(params[:shift_request])
+
+    if @shift_request.save
+      flash[:success] = "shift_request sent successfuly to #{@user.full_name}"
+    else
+      flash[:error] = "Failed to send shift_request to #{@user.full_name}" + ' --- ' + @shift_request.errors.full_messages.join('. ')
+    end
+    redirect_to(:back)
+  end
 
   def activate
     change_state('active')

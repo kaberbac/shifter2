@@ -10,7 +10,8 @@ Shifter2::Application.routes.draw do
       member do
         put :activate
         put :inactivate
-        put :request_shift
+        get :request_shift
+        put :update_shift_request
       end
     end
     resources :shifts, only: [:index, :destroy, :update_workplace] do

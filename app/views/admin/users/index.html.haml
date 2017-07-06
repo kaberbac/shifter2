@@ -53,7 +53,7 @@
               Roles
         -if current_user.is_admin? || current_user.is_manager?
           %td.center_me
-            = link_to request_shift_admin_user_path(user.id), method: :put, class: "btn btn-default" do
+            = link_to request_shift_admin_user_path(user.id), class: "btn btn-default" do
               %span.glyphicon.glyphicon-envelope
               Shifts
 = will_paginate @users, :param_name => 'users_page',
