@@ -31,3 +31,5 @@
 %h3= t(".add_shift")
 = render 'new'
 
+%h3= "Requested shifts"
+= render 'requested_shifts', collection: @shift_requests.paginate(:page => params[:shiftrequests_page])

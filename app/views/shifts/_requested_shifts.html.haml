@@ -1,0 +1,31 @@
+%h2= t(".title", number: @shifts.count)
+
+= render 'shared/shift_error_messages'
+= render 'shared/shift_request_error_messages'
+
+= will_paginate collection, :param_name => 'shiftrequests_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
+%table.table.table-striped.table-bordered.table-hover
+  %tr
+    %th.center_me= "Requested by"
+    %th.center_me= Shift.human_attribute_name(:day_work)
+    %th.center_me= "Workplace"
+    %th.center_me= "Accept"
+    %th.center_me= "Refuse"
+    - collection.each do |shift_request|
+      %tr
+        %td= User.find(shift_request.manager_id).full_name
+        %td= shift_request.day_work
+        %td= shift_request.workplace.try(:name) || "No workplace"
+        %td.center_me
+          = link_to accepte_user_shift_request_path(current_user.id, shift_request.id), method: :put, class: "btn btn-success", "data-no-turbolink" => true do
+            %span.glyphicon.glyphicon-ok
+        %td.center_me
+          = link_to refuse_user_shift_request_path(current_user.id, shift_request.id), method: :put, class: "btn btn-danger", "data-no-turbolink" => true do
+            %span.glyphicon.glyphicon-remove
+
+= will_paginate collection, :param_name => 'shiftrequests_page',
+  :previous_label => t("will_paginate.previous_label"),
+  :next_label     => t("will_paginate.next_label")
+

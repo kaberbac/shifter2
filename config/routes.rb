@@ -35,6 +35,12 @@ Shifter2::Application.routes.draw do
     resources :shifts, except: [:edit, :show, :update]
     get :passwordchange, on: :member
     get :signup, on: :collection
+    resources :shift_requests do
+      member do
+        put :accepte
+        put :refuse
+      end
+    end
   end
   resources :sessions, only: [:new, :create, :destroy]
 
