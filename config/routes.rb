@@ -4,7 +4,7 @@ Shifter2::Application.routes.draw do
     resources :users do
       resources :user_roles, only: [:create, :index, :destroy, :update_workplace] do
         member do
-          put :update_workplace
+          put :create_workplace
         end
       end
       member do

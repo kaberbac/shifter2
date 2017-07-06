@@ -1,9 +1,18 @@
 class Admin::UserRolesController < Admin::BaseController
 
   before_filter :set_user, :require_admin
+  before_filter :set_user_role_manager, only: [:create_workplace, :index]
 
-  def update_workplace
+  def create_workplace
+    selected_workplace = params[:user_role][:workplace_id]
+    @user_role_manager = UserRole.new(user_id: @user.id, role_name: Role.get_manager!, workplace_id: selected_workplace)
+    if @user_role_manager.save
+      flash[:success] = "#{selected_workplace} workplace is given to manager : #{@user.full_name} successfuly"
+    else
+      flash[:error] = @user_role_manager.errors.full_messages.join('. ')
+    end
 
+    redirect_to admin_user_user_roles_path(@user.id)
   end
 
   def create
@@ -20,9 +29,13 @@ class Admin::UserRolesController < Admin::BaseController
   end
 
   def index
+    @user_role_workplaces_assigned = UserRole.where('workplace_id IS NOT NULL AND user_id=?', @user.id)
+    if @user_role_workplaces_assigned.present?
+      @user_workplaces_not_assigned = Workplace.where('id NOT IN (?)',@user_role_workplaces_assigned.pluck(:workplace_id))
+    else
+      @user_workplaces_not_assigned = Workplace.all
+    end
     @roles = Role.all - @user.user_roles.map{|u| u[:role_name]}
-    @workplaces = Workplace.all
-    @user_role = @user.user_roles.find_by_role_name('manager')
 
   end
 
@@ -44,6 +57,11 @@ class Admin::UserRolesController < Admin::BaseController
   def set_user
     @user = User.find(params[:user_id])
   end
+
+  def set_user_role_manager
+    @user_role_manager = @user.user_roles.find_by_role_name('manager')
+  end
+
 
   def require_admin
     if !current_user.is_admin?

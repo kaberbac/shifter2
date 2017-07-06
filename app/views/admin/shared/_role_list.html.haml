@@ -3,5 +3,8 @@
   %ul
   - @user.user_roles.where('id IS NOT NULL').each do |user_role|
     %li
-      = user_role.role_name
+      - if user_role.role_name == Role.get_manager!
+        = "#{user_role.role_name}[#{user_role.workplace.name if user_role.workplace_id.present?}]"
+      - else
+        = user_role.role_name
       [#{link_to 'Delete', admin_user_user_role_path(@user.id, user_role.id), :method=>:delete, :confirm=>'Are you sure?'}]

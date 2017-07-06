@@ -14,29 +14,41 @@
 = render :partial=>'admin/shared/role_list'
 %hr
 #addRole
+  %h4= 'Add Role'
   = form_for [:admin, @user, @user.user_roles.new] do |f|
-    = f.label 'Add Role:'
     - if @roles.present?
       = f.select :role_name, options_for_select(@roles)
-      = f.submit 'Add'
+      %br
+      = f.submit t("helpers.submit"), :class => 'btn btn-success'
+      = link_to t("helpers.cancel"), [:admin, User], :class => 'btn btn-danger'
     - else
       .alert.alert-info
         %strong Info!
         No more roles available to add
-%hr
-%h2 Workplace shift managed
 
-= form_for [:admin, @user_role], :url => update_workplace_admin_user_user_role_path(:user_id, :id) do |userrole|
-  %ul
-    - userrole.where('workplace_id IS NOT NULL').each do |user_role|
-      %li
-        = user_role.workplace_id
-  %hr
-  - if @workplaces.present?
-    = userrole.select(:workplace_id, Workplace.all.collect {|w| [ w.name, w.id ] })
-    %br
-      = user.submit t("helpers.submit"), :class => 'btn btn-success'
-      = link_to t("helpers.cancel"), [:admin, Shift], :class => 'btn btn-danger'
+
+%hr
+- if @user_role_manager.present?
+  %h2 Workplace shift
+
+  = form_for [:admin, @user, @user_role_manager], :url => create_workplace_admin_user_user_role_path(@user, @user_role_manager) do |userrole|
+    - if @user_role_workplaces_assigned.present?
+      %h4 This user can manage these workplaces
+      %ul
+        - @user_role_workplaces_assigned.each do |user_role|
+          %li
+            = user_role.workplace.name
+    %hr
+    %h4 Add workplace
+    - if @user_workplaces_not_assigned.present?
+      = userrole.select(:workplace_id, @user_workplaces_not_assigned.collect {|w| [ w.name, w.id ] })
+      %br
+        = userrole.submit t("helpers.submit"), :class => 'btn btn-success'
+        = link_to t("helpers.cancel"), [:admin, User], :class => 'btn btn-danger'
+    - else
+      .alert.alert-info
+        %strong Info!
+        No more workplaces available to add
 
 
 %hr

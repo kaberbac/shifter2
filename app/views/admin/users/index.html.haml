@@ -28,7 +28,10 @@
         %td
           %ul
           - user.user_roles.each do |user_role|
-            %li= user_role.role_name
+            - if user_role.workplace_id.present?
+              %li= "[#{user_role.workplace.name}]"
+            - else
+              %li= user_role.role_name
         %td{:class => "#{user.state}"}
           = user.state
         %td.center_me
