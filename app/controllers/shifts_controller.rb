@@ -34,7 +34,7 @@ class ShiftsController < ApplicationController
     @shifts = current_user.shifts.ordered.paginate(page: params[:shifts_page])
     @shift = Shift.new
     @shift_request = ShiftRequest.new
-    @shift_requests = current_user.shift_requests
+    @shift_requests = current_user.shift_requests.where(status: 'requested')
   end
 
   def new

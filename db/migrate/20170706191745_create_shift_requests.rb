@@ -5,6 +5,7 @@ class CreateShiftRequests < ActiveRecord::Migration
       t.integer :user_id
       t.integer :manager_id
       t.integer :workplace_id
+      t.string :status, default: 'requested'
 
       t.timestamps
     end

@@ -26,8 +26,9 @@ ActiveRecord::Schema.define(:version => 20170706191745) do
     t.integer  "user_id"
     t.integer  "manager_id"
     t.integer  "workplace_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.string   "status",       :default => "requested"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "shifts", :force => true do |t|

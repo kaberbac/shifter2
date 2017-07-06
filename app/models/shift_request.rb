@@ -1,7 +1,7 @@
 class ShiftRequest < ActiveRecord::Base
   # will_paginate how many items shown per page
   self.per_page = 10
-  attr_accessible :day_work, :manager_id, :user_id, :workplace_id
+  attr_accessible :day_work, :manager_id, :user_id, :workplace_id, :status
 
   # constants
   # relations
@@ -16,6 +16,7 @@ class ShiftRequest < ActiveRecord::Base
   validates :manager_id, presence: true
   validates :user_id, presence: true
   validates :workplace_id, presence: true
+  validates :status, presence: true
 
   # callbacks
 end
