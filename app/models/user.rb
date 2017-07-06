@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :shift_decisions, dependent: :restrict
   has_many :user_roles, dependent: :destroy
   has_many :workplaces, through: :user_roles
+  has_many :shift_requests, dependent: :restrict
 
   # scopes
 

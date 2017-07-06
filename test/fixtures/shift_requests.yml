@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  day_work: 2017-07-06
+  user_id: 1
+  manager_id: 1
+  workplace_id: 1
+
+two:
+  day_work: 2017-07-06
+  user_id: 1
+  manager_id: 1
+  workplace_id: 1

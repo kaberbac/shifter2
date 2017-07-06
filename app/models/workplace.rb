@@ -10,6 +10,7 @@ class Workplace < ActiveRecord::Base
   # relations
   has_many :shifts, dependent: :restrict
   has_many :user_roles, dependent: :restrict
+  has_many :shift_requests, dependent: :restrict
   # scopes
   # validations
   validates :name, presence: true, uniqueness: true
