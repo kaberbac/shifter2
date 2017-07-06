@@ -5,4 +5,3 @@
   = f.select(:workplace_id, Workplace.all.collect {|w| [ w.name, w.id ] })
   %br
   = f.submit t("helpers.add_date"), class: 'btn btn-success'
-  = link_to t("helpers.cancel"), [:admin, User], :class => 'btn btn-danger'

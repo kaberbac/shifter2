@@ -32,7 +32,6 @@ fr:
         users_index: "Index des utilisateurs"
         total_users: "Total %{number} utilisateur(s)"
         add_user: "Ajouter un utilisateur"
-        (in)activate: "(In)Activer"
         delete: "Effacer"
         edit: "Éditer"
 

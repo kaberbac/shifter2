@@ -1,6 +1,11 @@
 class Admin::UsersController < Admin::BaseController
   before_filter :set_user, :except=>[:index, :new, :create]
 
+  def request_shift
+    
+  end
+
+
   def activate
     change_state('active')
   end
